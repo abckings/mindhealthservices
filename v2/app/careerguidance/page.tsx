@@ -3,8 +3,37 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
 export default function CareerGuidance() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Career Guidance and Counselling",
+    "provider": {
+      "@type": "MedicalBusiness",
+      "name": "Raj Mind Health Services"
+    },
+    "description": "Expert career guidance helping students and professionals identify strengths and choose the right career path using standardized assessments like MCMF.",
+    "areaServed": "Chennai, India",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Students and Professionals"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Career Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Career Assessment" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "MCMF Tool Assessment" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Career Path Counselling" } }
+      ]
+    }
+  };
+
   return (
     <div className="bg-brand-cream min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="bg-brand-teal text-white py-12">
         <div className="container mx-auto px-4">
             <Link href="/services" className="inline-flex items-center text-brand-mint hover:text-white mb-4 transition">
