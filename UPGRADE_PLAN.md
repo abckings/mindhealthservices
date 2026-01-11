@@ -7,29 +7,30 @@ Upgrade the current static website to a dynamic platform for mind health profess
 ## Proposed Tech Stack
 
 ### Frontend
-- **Framework**: React.js or Next.js (for SEO and performance).
-- **Styling**: Tailwind CSS.
-- **State Management**: Redux or Context API.
+- **Framework**: Next.js 16 (React)
+- **Styling**: Tailwind CSS v4
+- **State Management**: React Context / Hooks
+- **Icons**: Lucide React
 
 ### Backend
-- **Runtime**: Node.js (Express.js) or Python (Django/FastAPI).
-- **Database**: PostgreSQL (for structured data like bookings/payments) or MongoDB.
-- **Authentication**: JWT (JSON Web Tokens) or Auth0/Firebase Auth.
+- **Runtime**: Node.js (Next.js API Routes / Server Actions)
+- **Database**: PostgreSQL (Future Phase)
+- **Authentication**: Auth.js (Future Phase)
 - **API Standards**: OpenAPI (Swagger) v3.1+ for high-quality agent consumption.
 
 ### Infrastructure
+- **Containerization**: Docker & Docker Compose
 - **Hosting**: Vercel/Netlify (Frontend), Railway/Heroku/AWS (Backend).
 - **CI/CD**: GitHub Actions.
 
 ## Features Breakdown
 
-### Phase 1: Foundation & Information (Current Parity +)
-- [x] Migrate current static content to new framework (Next.js 16).
+### Phase 1: Foundation & Information (Completed)
+- [x] Migrate current static content to new framework (Next.js).
 - [x] Modern UI/UX design (Responsive, Accessible) using Tailwind CSS.
-- [ ] "About Us" and "Services" pages with CMS integration (optional, e.g., Strapi/Contentful) for easy updates.
+- [x] Implement core pages: Home, About Us, Services, Contact Us, Gallery, Testimonials.
 - [x] **Agent Optimization**: Implement Schema.org structured data across all pages.
-- [x] Create missing team pages (`Board of Trustees`, `Advisory Board`, `Technical Support Team`).
-- [x] Refine Schema.org data for individual Service pages.
+- [x] **DevOps**: Add Docker support for containerized deployment.
 
 ### Phase 2: User System & Bookings (Agent Ready)
 - [ ] **User Authentication**: Login/Signup for Patients and Professionals.
@@ -52,6 +53,5 @@ Upgrade the current static website to a dynamic platform for mind health profess
 - [ ] **Agent Testing**: Verify that popular AI agents (e.g., via LangChain tools) can successfully navigate the booking flow.
 
 ## Next Steps
-1.  Verify static build and deployment capability.
-2.  Begin Phase 2: Set up User Authentication (NextAuth.js / Auth0) and Database (PostgreSQL).
-3.  Design and implement the Professional Dashboard.
+1.  Complete documentation updates (README.md).
+2.  Begin planning Phase 2 (Database schema & Authentication).

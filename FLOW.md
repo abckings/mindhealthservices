@@ -1,29 +1,29 @@
 # Application Flow
 
-This diagram represents the navigation structure of the Raj Mind Health Services website (v2 Upgrade).
+This diagram represents the navigation structure of the Raj Mind Health Services website.
 
 ```mermaid
 graph TD
-    Home["Home (/)"] --> About["About Us"]
+    Home["Home (index.html)"] --> About["About Us"]
     Home --> Services["Services"]
-    Home --> Testimonial["Testimonial (/testimonial)"]
-    Home --> Gallery["Gallery (/gallery)"]
-    Home --> Contact["Contact Us (/contactus)"]
+    Home --> Testimonial["Testimonial (testimonial.html)"]
+    Home --> Gallery["Gallery (gallery.html)"]
+    Home --> Contact["Contact Us (contactus.html)"]
 
     subgraph AboutGroup ["About Us"]
-        About --> WhoWeAre["Who We Are (/whoweare)"]
-        WhoWeAre --> Trustees["Board of Trustees (/boardoftrustees)"]
-        WhoWeAre --> Advisors["Advisory Board (/boardofadvisors)"]
-        WhoWeAre --> Technical["Technical Support Team (/technicalteam)"]
-        About --> WhatWeDo["What We Do (/whatwedo)"]
+        About --> Trustees["Board of Trustees (boardoftrustees.html)"]
+        About --> Advisors["Advisory Board (boardofadvisors.html)"]
+        About --> Technical["Technical Support Team (technicalteam.html)"]
+        About --> WhoWeAre["Who We Are (whoweare.html)"]
+        About --> WhatWeDo["What We Do (whatwedo.html)"]
     end
 
     subgraph ServicesGroup ["Services"]
-        Services --> Counselling["One to One Counselling (/counselling)"]
-        Services --> SpecialEd["Special Education (/specialeducation)"]
-        Services --> Career["Career Guidance (/careerguidance)"]
-        Services --> Training["Training (/training)"]
-        Services --> Assessment["Assessment (/assessment)"]
-        Services --> Other["Other Services (/otherservices)"]
+        Services --> Counselling["One to One Counselling (counselling.html)"]
+        Services --> SpecialEd["Special Education (specialeducation.html)"]
+        Services --> Career["Career Guidance (careerguidance.html)"]
+        Services --> Training["Training (training.html)"]
+        Services --> Assessment["Assessment (assessment.html)"]
+        Services --> Other["Other Services (otherservices.html)"]
     end
 ```

@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Raj Mind Health Services (v2)
+
+This is the upgraded version of the Raj Mind Health Services platform, built with **Next.js 16**, **Tailwind CSS v4**, and **Lucide React**.
+
+## Features
+
+- **Responsive Design**: Modern UI optimized for mobile and desktop.
+- **Improved Navigation**: Clear structure for services and information.
+- **Agent Optimized**: Schema.org JSON-LD structured data for better AI discoverability.
+- **Docker Support**: Containerized for easy deployment.
+
+## Prerequisites
+
+- **Node.js**: v20.9.0 or higher (for local development).
+- **Docker**: For containerized deployment.
 
 ## Getting Started
 
-First, run the development server:
+### Local Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1.  Navigate to the `v2` directory:
+    ```bash
+    cd v2
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3.  Run the development server:
+    ```bash
+    npm run dev
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Learn More
+### Docker
 
-To learn more about Next.js, take a look at the following resources:
+You can build and run the application using Docker and Docker Compose. The `docker-compose.yml` file is located in the root directory.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Build and Run**:
+    From the root of the repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```bash
+    docker compose up -d --build
+    ```
 
-## Deploy on Vercel
+    The application will be available at [http://localhost:3000](http://localhost:3000).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  **Stop**:
+    ```bash
+    docker compose down
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+- `app/`: Next.js App Router pages and layouts.
+- `public/`: Static assets (images, fonts).
+- `components/`: Reusable React components (Navbar, Footer, etc.).
+- `Dockerfile`: Docker configuration for production builds.

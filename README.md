@@ -1,29 +1,30 @@
 # Raj Mind Health Services (MHS)
 
-This is a static website for **Raj Mind Health Services**, a platform offering counselling, special education, career guidance, and other mental health services.
+**Note:** This repository contains two versions of the website.
 
-## Technology Stack
+- **Current Version (v2)**: Located in the [`v2/`](./v2) directory. This is the modern, dynamic platform built with Next.js.
+- **Legacy Version**: Located in the [`legacy/`](./legacy) directory. This is the static HTML/CSS site.
 
-- **HTML5**: Structure of the web pages.
-- **CSS3**: Styling (using Bootstrap and custom styles).
-- **JavaScript**: Interactivity (using jQuery and various plugins like Camera slider, CarouFredSel, etc.).
+## Getting Started with v2 (Recommended)
 
-## Project Structure
+Please navigate to the [`v2/`](./v2) directory for the latest version of the application.
 
-- `index.html`: The main landing page.
-- `css/`: Contains CSS stylesheets (`style.css`, `bootstrap.css`, etc.).
-- `js/`: Contains JavaScript files (`jquery.js`, `bootstrap.js`, etc.).
-- `images/`: Contains images used in the website.
-- `*.html`: Other pages (e.g., `whoweare.html`, `counselling.html`, `contactus.html`).
+See [`v2/README.md`](./v2/README.md) for detailed setup and Docker instructions.
 
-## Setup
+## Legacy Site
 
-Since this is a static website, you can run it using any simple HTTP server.
+The legacy static website files are located in the [`legacy/`](./legacy) directory.
 
-**Using Python:**
+**To run the legacy site:**
 
-```bash
-python3 -m http.server
-```
+1. Navigate to the legacy directory:
+   ```bash
+   cd legacy
+   ```
 
-Then open `http://localhost:8000` in your browser.
+2. Run a simple HTTP server:
+   ```bash
+   python3 -m http.server
+   ```
+
+3. Open `http://localhost:8000`.

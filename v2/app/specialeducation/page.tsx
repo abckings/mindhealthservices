@@ -3,37 +3,8 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
 export default function SpecialEducation() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Special Education and Remediation",
-    "provider": {
-      "@type": "MedicalBusiness",
-      "name": "Raj Mind Health Services"
-    },
-    "description": "Specialized learning support for students with exceptional needs, including those with learning disabilities like dyslexia, using Individualised Educational Plans (IEP).",
-    "areaServed": "Chennai, India",
-    "audience": {
-      "@type": "Audience",
-      "audienceType": "Children with Learning Disabilities"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Special Education Services",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dyslexia Remediation" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Individualised Educational Plan (IEP)" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One-to-One Special Education" } }
-      ]
-    }
-  };
-
   return (
     <div className="bg-brand-cream min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <section className="bg-brand-teal text-white py-12">
         <div className="container mx-auto px-4">
             <Link href="/services" className="inline-flex items-center text-brand-mint hover:text-white mb-4 transition">

@@ -3,34 +3,8 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
 export default function Assessment() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Psychometric Assessment",
-    "provider": {
-      "@type": "MedicalBusiness",
-      "name": "Raj Mind Health Services"
-    },
-    "description": "Professional psychometric assessments for IQ, learning disabilities, ADHD, autism, and personality traits conducted by consultant psychologists.",
-    "areaServed": "Chennai, India",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Assessment Services",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "IQ Testing" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dyslexia Screening" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ADHD Assessment" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personality Assessment" } }
-      ]
-    }
-  };
-
   return (
     <div className="bg-brand-cream min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <section className="bg-brand-teal text-white py-12">
         <div className="container mx-auto px-4">
             <Link href="/services" className="inline-flex items-center text-brand-mint hover:text-white mb-4 transition">
