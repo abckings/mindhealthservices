@@ -44,15 +44,15 @@ body{ background: #fff; border:0; font:28px 'arial', Arial, Helvetica, sans-seri
 
 
 /* ============================= header ====================== */
-.top1_wrapper{position: relative; background: #F1D6FC;height:180px;}
-.top1_shadow{position: absolute; width: 100%; height: 5px; background: #4D026C; left: 0; bottom: 0;}
+.top1_wrapper{position: relative; background: #E9F5F9;height:180px;}
+.top1_shadow{position: absolute; width: 100%; height: 5px; background: #264653; left: 0; bottom: 0;}
 .top1_inner{position: relative;}
 .top1{position: relative;}
 
 header{position: absolute; left: 0; top: 10px; height:270px;}
 
 /* ============================= banner ====================== */
-#banner_wrapper{ padding-bottom: 50px; padding-top: 40px; background: #F1D6FC;}
+#banner_wrapper{ padding-bottom: 50px; padding-top: 40px; background: #E9F5F9;}
 
 #banner{position: relative; padding-bottom: 70px; padding-top: 0px;}
 
@@ -81,8 +81,8 @@ transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-trans
 .banner .banner_inner a:hover figure{}
 .banner .banner_inner a .img{}
 .banner .banner_inner a .txt2{font:16px 'Arial', Arial, Helvetica, sans-serif; color:#000000; line-height:20px;}
-.banner .banner_inner a .txt3{font-weight: 300; color: #fff; font-size: 22px; line-height: 40px; background: #4D026C; padding: 0 30px; border-radius:20px; -moz-border-radius:20px; -webkit-border-radius:20px;margin-top: 30px;display: inline-block;}
-.banner .banner_inner a:hover .txt3{color: #4D026C; background: #fff;  }
+.banner .banner_inner a .txt3{font-weight: 300; color: #fff; font-size: 22px; line-height: 40px; background: #264653; padding: 0 30px; border-radius:20px; -moz-border-radius:20px; -webkit-border-radius:20px;margin-top: 30px;display: inline-block;}
+.banner .banner_inner a:hover .txt3{color: #264653; background: #fff;  }
 
 
 /* ============================= banner end ====================== */
@@ -162,13 +162,13 @@ transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-trans
 /* ============================= content ====================== */
 #content{padding-top: 40px; padding-bottom: 40px;}
 
-#content2{padding-top: 40px; padding-bottom: 40px; background: #F1D6FC;}
+#content2{padding-top: 40px; padding-bottom: 40px; background: #E9F5F9;}
 
 #content3{padding-top: 40px; padding-bottom: 40px; background: #f2f2f2;}
 
 /* ============================= footer ====================== */
 
-.bot1{padding-top: 40px; padding-bottom: 40px; background: #4D026C; color: #c4cdcd;}
+.bot1{padding-top: 40px; padding-bottom: 40px; background: #264653; color: #c4cdcd;}
 .bot1 a{color: #c4cdcd;}
 
 .logo2_wrapper{padding-bottom: 15px; margin-top: 20px;}
@@ -187,8 +187,8 @@ transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-trans
 .menu_wrapper{position: relative; float: right; padding-top:60px;}
 .navbar_ { margin: 0; padding: 0; background: none; position: relative;z-index: 30;}
 .navbar_ .navbar-inner_ { padding: 0; margin: 0; border: none; min-height: inherit; background: none; border-radius:0px; -moz-border-radius:0px; -webkit-border-radius:0px; box-shadow: none; moz-box-shadow: none; -webkit-box-shadow: none; filter:none; }
-.navbar_ .btn-navbar { background: #4D026C; border: none;box-shadow: none; moz-box-shadow: none; -webkit-box-shadow: none; margin-top: 128px; margin-bottom: 7px;}
-.navbar_ .btn-navbar:hover{background: #4D026C;}
+.navbar_ .btn-navbar { background: #264653; border: none;box-shadow: none; moz-box-shadow: none; -webkit-box-shadow: none; margin-top: 128px; margin-bottom: 7px;}
+.navbar_ .btn-navbar:hover{background: #264653;}
 .navbar_ .btn-navbar .icon-bar{background-image: none;}
 .nav-collapse_.collapse{ position:relative; display:block; text-align: center;}
 .navbar_ .nav{ position: relative; float: none; margin: 0; padding: 0; display: block; left: auto;}
@@ -199,13 +199,13 @@ transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-trans
 }
 .navbar_ .nav > li.active > a, .navbar_ .nav > li.active > a:hover, .navbar_ .nav > li.active > a:focus, .navbar_ .nav > li > a:hover, .navbar_ .nav > li > a:focus, .navbar_ .nav > li.sfHover > a, .navbar_ .nav > li.sfHover > a:hover{color: #fff; text-decoration: none; background: none;  box-shadow: none; moz-box-shadow: none; -webkit-box-shadow: none; margin-top: 0; padding-top: 10px;}
 
-.navbar_ .nav > li > a{background: #4D026C!important;}
-.navbar_ .nav > li + li > a{background: #4D026C!important;}
-.navbar_ .nav > li + li + li > a{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li > a{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li + li > a{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li + li + li > a{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li + li + li + li> a{background: #4D026C!important;}
+.navbar_ .nav > li > a{background: #264653!important;}
+.navbar_ .nav > li + li > a{background: #264653!important;}
+.navbar_ .nav > li + li + li > a{background: #264653!important;}
+.navbar_ .nav > li + li + li + li > a{background: #264653!important;}
+.navbar_ .nav > li + li + li + li + li > a{background: #264653!important;}
+.navbar_ .nav > li + li + li + li + li + li > a{background: #264653!important;}
+.navbar_ .nav > li + li + li + li + li + li + li> a{background: #264653!important;}
 
 
 .sub-menu ul { position: absolute; display: none; left: 0px; top:50px; list-style: none; zoom: 1; z-index: 109; margin: 0; padding:10px 0; background: none; text-align: left; }
@@ -222,13 +222,13 @@ transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-trans
 
 .sub-menu-2 > ul{left: 100%; top: -10px; margin-left: 0px;}
 
-.navbar_ .nav > li.sub-menu ul{background: #4D026C!important;}
-.navbar_ .nav > li + li.sub-menu ul{background: #4D026C!important;}
-.navbar_ .nav > li + li + li.sub-menu ul{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li.sub-menu ul{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li + li.sub-menu ul{background: #4D026C!important;}
-.navbar_ .nav > li + li + li + li + li + li.sub-menu ul{background: #4D026C1!important;}
-.navbar_ .nav > li + li + li + li + li + li+ li.sub-menu ul{background: #4D026C1!important;}
+.navbar_ .nav > li.sub-menu ul{background: #264653!important;}
+.navbar_ .nav > li + li.sub-menu ul{background: #264653!important;}
+.navbar_ .nav > li + li + li.sub-menu ul{background: #264653!important;}
+.navbar_ .nav > li + li + li + li.sub-menu ul{background: #264653!important;}
+.navbar_ .nav > li + li + li + li + li.sub-menu ul{background: #264653!important;}
+.navbar_ .nav > li + li + li + li + li + li.sub-menu ul{background: #264653!important;}
+.navbar_ .nav > li + li + li + li + li + li+ li.sub-menu ul{background: #264653!important;}
 
 /* ============================= menu bot ====================== */
 .menu_bot { display:inline-block; float: left; position: relative; z-index:10; text-align:center; white-space:nowrap; padding-top: 20px; }
@@ -286,13 +286,13 @@ h6{ font-family:'Oswald'; font-weight:400; font-size:20px; line-height: 25px; co
 
 /* === */
 
-.button1{ display:inline-block; line-height:18px;  text-decoration: none; margin-top:10px; margin-bottom:10px; font-size:22px; font-family:'Oswald'; font-weight: 900; color:#fff; white-space:nowrap; letter-spacing:0px; background:#a8c73a; padding: 20px 70px 20px 30px; border-radius:40px; -moz-border-radius:40px; -webkit-border-radius:40px; position: relative;
+.button1{ display:inline-block; line-height:18px;  text-decoration: none; margin-top:10px; margin-bottom:10px; font-size:22px; font-family:'Oswald'; font-weight: 900; color:#fff; white-space:nowrap; letter-spacing:0px; background:#2A9D8F; padding: 20px 70px 20px 30px; border-radius:40px; -moz-border-radius:40px; -webkit-border-radius:40px; position: relative;
 transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out;
 }
 .button1 em{width: 45px; height: 44px; background: url(../images/button1.png) 0 0 no-repeat; position: absolute; right: 7px; top: 50%; margin-top: -22px;}
-.button1:hover { color:#fff; background: #ff8615;}
+.button1:hover { color:#fff; background: #E76F51;}
 
-.button2{ display:inline-block; line-height:24px;  text-decoration: underline; margin-top:10px; margin-bottom:10px; font-size:24px; font-family:'Oswald'; font-weight: 300; color:#4D026C; white-space:nowrap; letter-spacing:0px; background:none;
+.button2{ display:inline-block; line-height:24px;  text-decoration: underline; margin-top:10px; margin-bottom:10px; font-size:24px; font-family:'Oswald'; font-weight: 300; color:#264653; white-space:nowrap; letter-spacing:0px; background:none;
 transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out;
 }
 .button2:hover { color:#000; text-decoration: none;}
@@ -410,8 +410,8 @@ transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out; -webkit-trans
 #ajax-contact-form .control-group.capthca{margin-bottom: 0px;}
 #ajax-contact-form .capthca input{width: 136px; float: left; margin-right: 20px;margin-bottom: 10px;}
 #ajax-contact-form img{float:left; width:130px; height:42px;margin-bottom: 10px;}
-#ajax-contact-form .submit{border: 0; margin: 0; display: inline-block; line-height:63px; height: 63px; color: #fff;  text-decoration: none; white-space:nowrap; letter-spacing:0px; background: #4d026c; padding:0px 70px 0px 30px;font-size:22px; font-family:'Oswald'; font-weight: 900; position: relative; border-radius:40px; -moz-border-radius:40px; -webkit-border-radius:40px;}
-#ajax-contact-form .submit:hover{color: #fff; background: #4d026c;}
+#ajax-contact-form .submit{border: 0; margin: 0; display: inline-block; line-height:63px; height: 63px; color: #fff;  text-decoration: none; white-space:nowrap; letter-spacing:0px; background: #264653; padding:0px 70px 0px 30px;font-size:22px; font-family:'Oswald'; font-weight: 900; position: relative; border-radius:40px; -moz-border-radius:40px; -webkit-border-radius:40px;}
+#ajax-contact-form .submit:hover{color: #fff; background: #2A9D8F;}
 #ajax-contact-form .submit em{width: 45px; height: 44px; background: url(../images/button1.png) 0 0 no-repeat; position: absolute; right: 7px; top: 50%; margin-top: -22px;}
 
 /*================= 404 =========================*/
