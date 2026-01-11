@@ -3,34 +3,8 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
 export default function Training() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Training and Workshops",
-    "provider": {
-      "@type": "MedicalBusiness",
-      "name": "Raj Mind Health Services"
-    },
-    "description": "Customized training workshops for schools, colleges, and organizations covering topics like parenting, stress management, and soft skills.",
-    "areaServed": "Chennai, India",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Training Programs",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Positive Parenting Workshop" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Stress Management Workshop" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Teacher Training" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Soft Skills Development" } }
-      ]
-    }
-  };
-
   return (
     <div className="bg-brand-cream min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <section className="bg-brand-teal text-white py-12">
         <div className="container mx-auto px-4">
             <Link href="/services" className="inline-flex items-center text-brand-mint hover:text-white mb-4 transition">
