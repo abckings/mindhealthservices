@@ -1,0 +1,82 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
+import Image from "next/image";
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+
+  return (
+    <nav className="bg-brand-teal text-white shadow-lg sticky top-0 z-50">
+      {/* Top Bar - Contact Info */}
+      <div className="bg-brand-teal/90 border-b border-brand-sage/20 py-2 hidden md:block">
+        <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-sm text-brand-mint/80 font-medium">
+          <a href="tel:+916383376668" className="flex items-center hover:text-brand-sage transition">
+            <Phone className="w-4 h-4 mr-2" />
+            +91 63833 76668
+          </a>
+          <a href="mailto:info@mindhealthservices.org" className="flex items-center hover:text-brand-sage transition">
+            <Mail className="w-4 h-4 mr-2" />
+            info@mindhealthservices.org
+          </a>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="relative w-12 h-12 bg-white rounded-full p-1">
+                 <Image src="/images/logo.png" alt="Raj Mind Health Services" fill className="object-contain p-1" />
+            </div>
+            <div className="leading-tight">
+              <span className="block text-xl font-bold tracking-wide">RAJ MIND HEALTH</span>
+              <span className="block text-xs text-brand-sage font-medium tracking-widest">SERVICES</span>
+            </div>
+          </Link>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex space-x-8 font-medium items-center">
+            <Link href="/" className="hover:text-brand-sage transition">Home</Link>
+            <Link href="/whoweare" className="hover:text-brand-sage transition">About Us</Link>
+            <Link href="/services" className="hover:text-brand-sage transition">Services</Link>
+            <Link href="/gallery" className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/contactus" className="bg-brand-sage text-white px-5 py-2 rounded-full hover:bg-brand-orange transition shadow-md">
+              Contact Us
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden focus:outline-none text-brand-mint"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-brand-teal/95 border-t border-brand-sage/20">
+          <div className="flex flex-col space-y-4 p-6 text-center text-lg font-medium">
+            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Home</Link>
+            <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">About Us</Link>
+            <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Services</Link>
+             <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-brand-sage font-bold">Contact Us</Link>
+            <div className="pt-4 flex flex-col items-center space-y-3 text-base text-brand-mint/70">
+                <a href="tel:+916383376668" className="flex items-center"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
