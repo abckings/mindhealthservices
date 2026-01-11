@@ -10,7 +10,7 @@ graph TD
     Home --> Gallery["Gallery (gallery.html)"]
     Home --> Contact["Contact Us (contactus.html)"]
 
-    subgraph About Us
+    subgraph AboutGroup ["About Us"]
         About --> Trustees["Board of Trustees (boardoftrustees.html)"]
         About --> Advisors["Advisory Board (boardofadvisors.html)"]
         About --> Technical["Technical Support Team (technicalteam.html)"]
@@ -18,7 +18,7 @@ graph TD
         About --> WhatWeDo["What We Do (whatwedo.html)"]
     end
 
-    subgraph Services
+    subgraph ServicesGroup ["Services"]
         Services --> Counselling["One to One Counselling (counselling.html)"]
         Services --> SpecialEd["Special Education (specialeducation.html)"]
         Services --> Career["Career Guidance (careerguidance.html)"]
