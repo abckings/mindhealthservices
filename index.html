@@ -51,6 +51,69 @@
 
 <script type="text/javascript" src="js/jquery.caroufredsel.js"></script>
 <script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Raj Mind Health Services",
+  "image": "https://www.mindhealthservices.org/images/logo.png",
+  "@id": "https://www.mindhealthservices.org",
+  "url": "https://www.mindhealthservices.org",
+  "telephone": "+916383376668",
+  "email": "info@mindhealthservices.org",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "304-B, Block II, Alaka Palazzo, 4/219 Poonamallee High Road, Kattupakkam",
+    "addressLocality": "Chennai",
+    "postalCode": "600056",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 13.0474087,
+    "longitude": 80.1203722
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "sameAs": [
+    "https://www.facebook.com/",
+    "https://twitter.com/"
+  ],
+  "medicalSpecialty": [
+    "Psychology",
+    "Special Education",
+    "Counselling"
+  ],
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "mailto:info@mindhealthservices.org?subject=Appointment%20Request",
+      "inLanguage": "en-US",
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/IOSPlatform",
+        "http://schema.org/AndroidPlatform"
+      ]
+    },
+    "result": {
+      "@type": "Reservation",
+      "name": "Book an Appointment"
+    }
+  }
+}
+</script>
 <script>
 $(document).ready(function() {
 	// camera
