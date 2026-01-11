@@ -1,4 +1,4 @@
-# Raj Mind Health Services
+# Raj Mind Health Services (MHS)
 
 This is a static website for **Raj Mind Health Services**, a platform offering counselling, special education, career guidance, and other mental health services.
 
