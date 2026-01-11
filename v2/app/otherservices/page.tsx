@@ -3,8 +3,32 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
 export default function OtherServices() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Holistic Mind Services",
+    "provider": {
+      "@type": "MedicalBusiness",
+      "name": "Raj Mind Health Services"
+    },
+    "description": "Additional services including Chess Training for cognitive development and Yoga for mental well-being.",
+    "areaServed": "Chennai, India",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Other Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Chess Training" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Yoga Classes" } }
+      ]
+    }
+  };
+
   return (
     <div className="bg-brand-cream min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="bg-brand-teal text-white py-12">
         <div className="container mx-auto px-4">
             <Link href="/services" className="inline-flex items-center text-brand-mint hover:text-white mb-4 transition">

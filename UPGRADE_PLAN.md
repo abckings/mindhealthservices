@@ -8,7 +8,7 @@ Upgrade the current static website to a dynamic platform for mind health profess
 
 ### Frontend
 - **Framework**: React.js or Next.js (for SEO and performance).
-- **Styling**: Tailwind CSS or Material UI.
+- **Styling**: Tailwind CSS.
 - **State Management**: Redux or Context API.
 
 ### Backend
@@ -24,10 +24,12 @@ Upgrade the current static website to a dynamic platform for mind health profess
 ## Features Breakdown
 
 ### Phase 1: Foundation & Information (Current Parity +)
-- [ ] Migrate current static content to new framework.
-- [ ] Modern UI/UX design (Responsive, Accessible).
+- [x] Migrate current static content to new framework (Next.js 16).
+- [x] Modern UI/UX design (Responsive, Accessible) using Tailwind CSS.
 - [ ] "About Us" and "Services" pages with CMS integration (optional, e.g., Strapi/Contentful) for easy updates.
-- [ ] **Agent Optimization**: Implement Schema.org structured data across all pages.
+- [x] **Agent Optimization**: Implement Schema.org structured data across all pages.
+- [x] Create missing team pages (`Board of Trustees`, `Advisory Board`, `Technical Support Team`).
+- [x] Refine Schema.org data for individual Service pages.
 
 ### Phase 2: User System & Bookings (Agent Ready)
 - [ ] **User Authentication**: Login/Signup for Patients and Professionals.
@@ -50,6 +52,6 @@ Upgrade the current static website to a dynamic platform for mind health profess
 - [ ] **Agent Testing**: Verify that popular AI agents (e.g., via LangChain tools) can successfully navigate the booking flow.
 
 ## Next Steps
-1.  Initialize the repository with the new stack.
-2.  Set up the development environment.
-3.  Begin Phase 1 migration.
+1.  Verify static build and deployment capability.
+2.  Begin Phase 2: Set up User Authentication (NextAuth.js / Auth0) and Database (PostgreSQL).
+3.  Design and implement the Professional Dashboard.

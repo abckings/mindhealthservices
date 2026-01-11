@@ -68,21 +68,26 @@ export default function WhoWeAre() {
         <div className="container mx-auto px-4 text-center">
            <h3 className="text-2xl font-bold text-brand-teal mb-8">Our Team Structure</h3>
            <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-6 border border-brand-sage/20 rounded-xl hover:shadow-md transition">
+              <div className="p-6 border border-brand-sage/20 rounded-xl hover:shadow-md transition flex flex-col h-full">
                  <h4 className="font-bold text-lg mb-2">Board of Trustees</h4>
-                 <p className="text-sm text-gray-600 mb-4">Guiding the vision and mission.</p>
-                 {/* Link to specific page if needed later */}
-                 <span className="text-brand-sage font-semibold">Learn More</span>
+                 <p className="text-sm text-gray-600 mb-4 flex-grow">Guiding the vision and mission.</p>
+                 <Link href="/boardoftrustees" className="text-brand-sage font-semibold hover:text-brand-orange inline-flex items-center">
+                    Learn More <span className="ml-1">→</span>
+                 </Link>
               </div>
-              <div className="p-6 border border-brand-sage/20 rounded-xl hover:shadow-md transition">
+              <div className="p-6 border border-brand-sage/20 rounded-xl hover:shadow-md transition flex flex-col h-full">
                  <h4 className="font-bold text-lg mb-2">Advisory Board</h4>
-                 <p className="text-sm text-gray-600 mb-4">Providing expert counsel and direction.</p>
-                 <span className="text-brand-sage font-semibold">Learn More</span>
+                 <p className="text-sm text-gray-600 mb-4 flex-grow">Providing expert counsel and direction.</p>
+                 <Link href="/boardofadvisors" className="text-brand-sage font-semibold hover:text-brand-orange inline-flex items-center">
+                    Learn More <span className="ml-1">→</span>
+                 </Link>
               </div>
-              <div className="p-6 border border-brand-sage/20 rounded-xl hover:shadow-md transition">
+              <div className="p-6 border border-brand-sage/20 rounded-xl hover:shadow-md transition flex flex-col h-full">
                  <h4 className="font-bold text-lg mb-2">Technical Support Team</h4>
-                 <p className="text-sm text-gray-600 mb-4">Ensuring seamless operations.</p>
-                 <span className="text-brand-sage font-semibold">Learn More</span>
+                 <p className="text-sm text-gray-600 mb-4 flex-grow">Ensuring seamless operations.</p>
+                 <Link href="/technicalteam" className="text-brand-sage font-semibold hover:text-brand-orange inline-flex items-center">
+                    Learn More <span className="ml-1">→</span>
+                 </Link>
               </div>
            </div>
         </div>

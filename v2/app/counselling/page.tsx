@@ -3,8 +3,34 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
 export default function Counselling() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "One to One Counselling",
+    "provider": {
+      "@type": "MedicalBusiness",
+      "name": "Raj Mind Health Services"
+    },
+    "description": "Professional counselling services for adolescents, students, pre-marital/marital issues, stress, anxiety, and depression.",
+    "areaServed": "Chennai, India",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Counselling Services",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Adolescent Counselling" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Student Counselling" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Marital Counselling" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cognitive Behavioral Therapy" } }
+      ]
+    }
+  };
+
   return (
     <div className="bg-brand-cream min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="bg-brand-teal text-white py-12">
         <div className="container mx-auto px-4">
             <Link href="/services" className="inline-flex items-center text-brand-mint hover:text-white mb-4 transition">
