@@ -31,7 +31,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="relative w-12 h-12 bg-white rounded-full p-1">
-                 <Image src="/images/logo.png" alt="Raj Mind Health Services" fill className="object-contain p-1" />
+              <Image src="/images/logo.png" alt="Raj Mind Health Services" fill className="object-contain p-1" />
             </div>
             <div className="leading-tight">
               <span className="block text-xl font-bold tracking-wide">RAJ MIND HEALTH</span>
@@ -45,6 +45,7 @@ const Navbar = () => {
             <Link href="/whoweare" className="hover:text-brand-sage transition">About Us</Link>
             <Link href="/services" className="hover:text-brand-sage transition">Services</Link>
             <Link href="/gallery" className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/dashboard" className="text-brand-orange font-bold hover:text-white transition">Dashboard</Link>
             <Link href="/contactus" className="bg-brand-sage text-white px-5 py-2 rounded-full hover:bg-brand-orange transition shadow-md">
               Contact Us
             </Link>
@@ -69,10 +70,11 @@ const Navbar = () => {
             <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Home</Link>
             <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">About Us</Link>
             <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Services</Link>
-             <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/dashboard" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition font-semibold">Dashboard</Link>
             <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-brand-sage font-bold">Contact Us</Link>
             <div className="pt-4 flex flex-col items-center space-y-3 text-base text-brand-mint/70">
-                <a href="tel:+916383376668" className="flex items-center"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
+              <a href="tel:+916383376668" className="flex items-center"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
             </div>
           </div>
         </div>
