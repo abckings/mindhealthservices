@@ -25,12 +25,12 @@ This is the upgraded version of the Raj Mind Health Services platform, built wit
 
 2.  Install dependencies:
     ```bash
-    npm install
+    pnpm install
     ```
 
 3.  Run the development server:
     ```bash
-    npm run dev
+    pnpm run dev
     ```
 
     Open [http://localhost:3000](http://localhost:3000) with your browser.

@@ -1,13 +1,15 @@
 import http.client
 import json
 import random
+import os
 from datetime import datetime, timedelta
 
 # Configuration
 API_HOST = "localhost"
 API_PORT = 3000
 API_PATH = "/api/admin/seed"
-SEED_SECRET = "temp-secret-key" # Should match env variable
+# Read secret from env or default
+SEED_SECRET = os.environ.get("SEED_SECRET", "temp-secret-key")
 
 def generate_mock_data():
     now = datetime.now()
@@ -24,9 +26,9 @@ def generate_mock_data():
             "bio": f"Experienced {spec} with 10+ years of practice.",
             "specialty": spec,
             "services": [
-                {"name": "Initial Consultation", "duration": 30, "price": 50.0},
-                {"name": "Standard Therapy", "duration": 60, "price": 100.0},
-                {"name": "Assessment", "duration": 90, "price": 150.0}
+                {"name": "Initial Consultation", "description": "First meet", "duration": 30, "price": 50.0},
+                {"name": "Standard Therapy", "description": "Regular session", "duration": 60, "price": 100.0},
+                {"name": "Assessment", "description": "Full assessment", "duration": 90, "price": 150.0}
             ],
             "availability": [
                 {"dayOfWeek": 1, "startTime": "09:00", "endTime": "12:00"}, # Mon Morning
