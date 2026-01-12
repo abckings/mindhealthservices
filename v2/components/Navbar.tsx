@@ -9,15 +9,15 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-neutral-900 text-white shadow-lg sticky top-0 z-50">
+    <nav className="bg-brand-teal text-white shadow-lg sticky top-0 z-50">
       {/* Top Bar - Contact Info */}
-      <div className="bg-neutral-950 border-b border-neutral-800 py-2 hidden md:block">
-        <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-sm text-neutral-400 font-medium">
-          <a href="tel:+916383376668" className="flex items-center hover:text-white transition">
+      <div className="bg-brand-teal/90 border-b border-brand-sage/20 py-2 hidden md:block">
+        <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-sm text-brand-mint/80 font-medium">
+          <a href="tel:+916383376668" className="flex items-center hover:text-brand-sage transition">
             <Phone className="w-4 h-4 mr-2" />
             +91 63833 76668
           </a>
-          <a href="mailto:info@mindhealthservices.org" className="flex items-center hover:text-white transition">
+          <a href="mailto:info@mindhealthservices.org" className="flex items-center hover:text-brand-sage transition">
             <Mail className="w-4 h-4 mr-2" />
             info@mindhealthservices.org
           </a>
@@ -33,18 +33,18 @@ const Navbar = () => {
             </div>
             <div className="leading-tight">
               <span className="block text-xl font-bold tracking-wide">RAJ MIND HEALTH</span>
-              <span className="block text-xs text-neutral-400 font-medium tracking-widest">SERVICES</span>
+              <span className="block text-xs text-brand-sage font-medium tracking-widest">SERVICES</span>
             </div>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 font-medium items-center">
-            <Link href="/" className="hover:text-neutral-300 transition">Home</Link>
-            <Link href="/whoweare" className="hover:text-neutral-300 transition">About Us</Link>
-            <Link href="/services" className="hover:text-neutral-300 transition">Services</Link>
-            <Link href="/gallery" className="hover:text-neutral-300 transition">Gallery</Link>
-            <Link href="/dashboard" className="text-white font-bold hover:text-neutral-300 transition">Dashboard</Link>
-            <Link href="/contactus" className="bg-white text-neutral-900 px-5 py-2 rounded-full hover:bg-neutral-200 transition shadow-md">
+            <Link href="/" className="hover:text-brand-sage transition">Home</Link>
+            <Link href="/whoweare" className="hover:text-brand-sage transition">About Us</Link>
+            <Link href="/services" className="hover:text-brand-sage transition">Services</Link>
+            <Link href="/gallery" className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/dashboard" className="text-brand-orange font-bold hover:text-white transition">Dashboard</Link>
+            <Link href="/contactus" className="bg-brand-sage text-white px-5 py-2 rounded-full hover:bg-brand-orange transition shadow-md">
               Contact Us
             </Link>
           </div>
@@ -63,15 +63,15 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-neutral-900 border-t border-neutral-800">
+        <div className="md:hidden bg-brand-teal/95 border-t border-brand-sage/20">
           <div className="flex flex-col space-y-4 p-6 text-center text-lg font-medium">
-            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-neutral-300 transition">Home</Link>
-            <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-neutral-300 transition">About Us</Link>
-            <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-neutral-300 transition">Services</Link>
-            <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-neutral-300 transition">Gallery</Link>
-            <Link href="/dashboard" onClick={() => setIsOpen(false)} className="hover:text-neutral-300 transition font-semibold">Dashboard</Link>
-            <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-white font-bold">Contact Us</Link>
-            <div className="pt-4 flex flex-col items-center space-y-3 text-base text-neutral-400">
+            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Home</Link>
+            <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">About Us</Link>
+            <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Services</Link>
+            <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Gallery</Link>
+            <Link href="/dashboard" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition font-semibold">Dashboard</Link>
+            <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-brand-sage font-bold">Contact Us</Link>
+            <div className="pt-4 flex flex-col items-center space-y-3 text-base text-brand-mint/70">
               <a href="tel:+916383376668" className="flex items-center"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
             </div>
           </div>
