@@ -17,18 +17,11 @@ export async function createBooking(data: z.infer<typeof BookingSchema>) {
     // Simulate DB delay
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    // In real app:
+    // In real app, once DB is fully ready:
     // const session = await auth()
     // if (!session?.user) throw new Error("Unauthorized")
 
-    // await prisma.appointment.create({
-    //     data: {
-    //         date: validated.date,
-    //         time: validated.time,
-    //         userId: session.user.id,
-    //         serviceId: validated.serviceId
-    //     }
-    // })
+    // await prisma.appointment.create({ ... })
 
     console.log("Booking created:", validated)
     return { success: true }

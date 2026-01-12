@@ -289,6 +289,7 @@ export const SidebarMenuButton = React.forwardRef<
     React.ComponentProps<"button"> & {
         asChild?: boolean
         isActive?: boolean
+        variant?: "default" | "outline"
         tooltip?: string | React.ComponentProps<any>
         size?: "default" | "sm" | "lg"
     }
@@ -308,7 +309,7 @@ export const SidebarMenuButton = React.forwardRef<
         const Comp = asChild ? Slot : "button"
         return (
             <Comp
-                ref={ref}
+                ref={ref as any}
                 data-sidebar="menu-button"
                 data-size={size}
                 data-active={isActive}
