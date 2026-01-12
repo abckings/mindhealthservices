@@ -26,9 +26,9 @@ def generate_mock_data():
             "bio": f"Experienced {spec} with 10+ years of practice.",
             "specialty": spec,
             "services": [
-                {"name": "Initial Consultation", "description": "First meet", "duration": 30, "price": 50.0},
-                {"name": "Standard Therapy", "description": "Regular session", "duration": 60, "price": 100.0},
-                {"name": "Assessment", "description": "Full assessment", "duration": 90, "price": 150.0}
+                {"name": "Initial Consultation", "description": "First meet", "duration": 30, "price": 50.0, "currency": "INR"},
+                {"name": "Standard Therapy", "description": "Regular session", "duration": 60, "price": 100.0, "currency": "INR"},
+                {"name": "Assessment", "description": "Full assessment", "duration": 90, "price": 150.0, "currency": "INR"}
             ],
             "availability": [
                 {"dayOfWeek": 1, "startTime": "09:00", "endTime": "12:00"}, # Mon Morning

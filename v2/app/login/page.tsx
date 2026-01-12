@@ -5,14 +5,14 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Github, Chrome } from "lucide-react"
+import { redirect } from "next/navigation"
 
 export default async function LoginPage() {
   const session = await auth()
 
-  // If already logged in, we might want to redirect.
-  // For now, let's just show the user status.
-  // But typically a login page should redirect to dashboard if logged in.
-  // We'll leave that logic for middleware or client-side for now.
+  if (session?.user) {
+    redirect('/dashboard')
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">

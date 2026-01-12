@@ -44,6 +44,7 @@ model Service {
   description     String?
   duration        Int       // in minutes
   price           Float
+  currency        String    @default("INR")
   
   professional    ProfessionalProfile @relation(fields: [professionalId], references: [id])
   appointments    Appointment[]
