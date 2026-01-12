@@ -1,9 +1,6 @@
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma"; // Assuming a singleton exists or we instantiate
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const db = new PrismaClient();
 
 export async function POST(req: Request) {
     try {
@@ -20,7 +17,7 @@ export async function POST(req: Request) {
         }
 
         // Verify Access Code
-        const codeRecord = await db.accessCode.findUnique({
+        const codeRecord = await prisma.accessCode.findUnique({
             where: { code: accessCode },
         });
 
@@ -29,15 +26,11 @@ export async function POST(req: Request) {
         }
 
         if (codeRecord.isUsed) {
-            // Option: One-time use? Or Multi-use? 
-            // User plan said "One-Time Access Code".
-            // But if multiple professionals join, we might need a multi-use code or generated codes.
-            // For "drop-in", usually Admin generates a code for a specific person.
             return NextResponse.json({ error: "Code already used" }, { status: 400 });
         }
 
         // Update User Role
-        const updatedUser = await db.user.update({
+        const updatedUser = await prisma.user.update({
             where: { email: session.user.email },
             data: {
                 role: "PROFESSIONAL",
@@ -46,14 +39,14 @@ export async function POST(req: Request) {
         });
 
         // Create Professional Profile if not exists
-        await db.professionalProfile.upsert({
+        await prisma.professionalProfile.upsert({
             where: { userId: updatedUser.id },
             create: { userId: updatedUser.id, isVerified: true },
             update: { isVerified: true }
         });
 
         // Mark code as used
-        await db.accessCode.update({
+        await prisma.accessCode.update({
             where: { id: codeRecord.id },
             data: { isUsed: true }
         });

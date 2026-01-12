@@ -36,10 +36,43 @@ export default function AvailabilityPage() {
     const [schedule, setSchedule] = useState<DaySchedule[]>(DAYS.map(d => ({
         day: d.name,
         dayIndex: d.index,
-        active: d.index >= 1 && d.index <= 5, // Mon-Fri default
-        ranges: d.index >= 1 && d.index <= 5 ? [{ id: 'init', start: '09:00', end: '17:00' }] : []
+        active: false,
+        ranges: []
     })));
     const [loading, setLoading] = useState(false);
+    const [fetching, setFetching] = useState(true);
+
+    useEffect(() => {
+        const fetchAvailability = async () => {
+            try {
+                const res = await fetch('/api/professional/availability');
+                if (res.ok) {
+                    const data = await res.json();
+                    // Map DB data to UI state
+                    setSchedule(prev => prev.map(d => {
+                        const slots = data.filter((s: any) => s.dayOfWeek === d.dayIndex);
+                        if (slots.length > 0) {
+                            return {
+                                ...d,
+                                active: true,
+                                ranges: slots.map((s: any) => ({
+                                    id: crypto.randomUUID(),
+                                    start: s.startTime,
+                                    end: s.endTime
+                                }))
+                            };
+                        }
+                        return d;
+                    }));
+                }
+            } catch (e) {
+                console.error("Failed to fetch availability", e);
+            } finally {
+                setFetching(false);
+            }
+        };
+        fetchAvailability();
+    }, []);
 
     const handleToggleDay = (dayIndex: number) => {
         setSchedule(prev => prev.map(d => {
@@ -71,8 +104,6 @@ export default function AvailabilityPage() {
         setSchedule(prev => prev.map(d => {
             if (d.dayIndex === dayIndex) {
                 const newRanges = d.ranges.filter(r => r.id !== rangeId);
-                // If removing last range, deactivate day? Or keep active with 0 ranges?
-                // UX decision: keep active with 0 ranges implies unavailable effectively
                 return { ...d, ranges: newRanges };
             }
             return d;
@@ -94,7 +125,6 @@ export default function AvailabilityPage() {
     const saveSchedule = async () => {
         setLoading(true);
         // Transform UI state to DB payload
-        // We will replace all availability for this professional
         const payload = schedule.flatMap(d => {
             if (!d.active) return [];
             return d.ranges.map(r => ({
@@ -104,19 +134,27 @@ export default function AvailabilityPage() {
             }));
         });
 
-        // Mock API call for now, need a route to save availability
-        // console.log("Saving payload:", payload);
-
         try {
-            // Need to create this API route
-            // await fetch('/api/professional/availability', { method: 'POST', body: JSON.stringify(payload) })
-            alert("Schedule saved locally (API pending)");
+            const res = await fetch('/api/professional/availability', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert("Schedule saved successfully!");
+            } else {
+                alert("Failed to save schedule.");
+            }
         } catch (e) {
             console.error(e);
+            alert("Error saving schedule.");
         } finally {
             setLoading(false);
         }
     };
+
+    if (fetching) return <div>Loading...</div>;
 
     return (
         <div className="flex flex-col gap-6 p-4">
