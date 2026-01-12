@@ -9,10 +9,10 @@ export async function POST(req: Request) {
 
         // Validate Secret
         if (secret !== process.env.SEED_SECRET && secret !== "temp-secret-key") {
-             const envSecret = process.env.SEED_SECRET || "temp-secret-key";
-             if (secret !== envSecret) {
+            const envSecret = process.env.SEED_SECRET || "temp-secret-key";
+            if (secret !== envSecret) {
                 return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-             }
+            }
         }
 
         // 1. Create Patients

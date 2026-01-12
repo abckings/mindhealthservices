@@ -77,8 +77,8 @@ export default async function LoginPage() {
           <p className="text-xs text-center text-muted-foreground mt-2">
             By clicking continue, you agree to our Terms of Service and Privacy Policy.
           </p>
-        </CardFooter>
-      </Card>
-    </div>
+        </CardFooter >
+      </Card >
+    </div >
   )
 }
