@@ -33,13 +33,13 @@ Upgrade the current static website to a dynamic platform for mind health profess
 - [x] **DevOps**: Add Docker support for containerized deployment.
 
 ### Phase 2: User System & Bookings (Agent Ready)
-- [ ] **User Authentication**: Login/Signup for Patients and Professionals.
-- [ ] **Professional Profile**: Dashboard for professionals to manage availability.
-- [ ] **Booking System**:
+- [x] **User Authentication**: Login/Signup for Patients and Professionals.
+- [x] **Professional Profile**: Dashboard for professionals to manage availability.
+- [x] **Booking System**:
     -   Calendar view for availability.
     -   Slot selection for patients.
     -   Appointment management (Reschedule/Cancel).
-- [ ] **Agent API**: Expose well-documented endpoints for checking availability and creating bookings.
+- [x] **Agent API**: Expose well-documented endpoints for checking availability and creating bookings.
 
 ### Phase 3: Payments & Notifications
 - [ ] **Payment Gateway**: Integration with Stripe/Razorpay.
