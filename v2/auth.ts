@@ -1,29 +1,23 @@
 import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
+import Google from 'next-auth/providers/google';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { prisma } from "@/lib/prisma";
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
-// import { PrismaClient } from '@prisma/client';
 
 // const prisma = new PrismaClient();
-// Mock user for now to unblock build if Prisma is failing
-const getUser = async (email: string) => {
-    return null; // Mock
-}
 
-async function getUserReal(email: string) {
-    try {
-        // const user = await prisma.user.findUnique({ where: { email } });
-        return null;
-    } catch (error) {
-        console.error('Failed to fetch user:', error);
-        throw new Error('Failed to fetch user.');
-    }
-}
-
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, signIn, signOut, handlers } = NextAuth({
     ...authConfig,
+    adapter: PrismaAdapter(prisma),
+    session: { strategy: "jwt" },
     providers: [
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
         Credentials({
             async authorize(credentials) {
                 const parsedCredentials = z
@@ -32,15 +26,11 @@ export const { auth, signIn, signOut } = NextAuth({
 
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data;
-                    const user = await getUser(email);
-                    if (!user) return null;
+                    const user = await prisma.user.findUnique({ where: { email } });
+                    if (!user || !user.password) return null;
 
-                    // Note: In real app, check password hash. 
-                    // For now assuming existing users might not have passwords set up or using dummy check
-                    // const passwordsMatch = await bcrypt.compare(password, user.password);
-                    // if (passwordsMatch) return user;
-
-                    return user;
+                    const passwordsMatch = await bcrypt.compare(password, user.password);
+                    if (passwordsMatch) return user;
                 }
 
                 console.log('Invalid credentials');
@@ -48,4 +38,27 @@ export const { auth, signIn, signOut } = NextAuth({
             },
         }),
     ],
+    callbacks: {
+        async jwt({ token, user, trigger, session }) {
+            if (user) {
+                token.id = user.id;
+                // @ts-ignore
+                token.role = user.role;
+            }
+            // Update token if session is updated (e.g. role change)
+            if (trigger === "update" && session?.user) {
+                // @ts-ignore
+                token.role = session.user.role;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (session.user && token.id) {
+                session.user.id = token.id as string;
+                // @ts-ignore
+                session.user.role = token.role as string;
+            }
+            return session;
+        }
+    }
 });

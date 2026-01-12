@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://user:password@localhost:5432/mindhealth?schema=public"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -17,6 +17,9 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
+  // New: Track if they used an invite code
+  inviteCodeUsed String?
+  
   professionalProfile ProfessionalProfile?
   appointments        Appointment[]        @relation("PatientAppointments")
 }
@@ -26,6 +29,7 @@ model ProfessionalProfile {
   userId        String    @unique
   bio           String?
   specialty     String?
+  isVerified    Boolean   @default(false)
   
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   services      Service[]
@@ -50,7 +54,7 @@ model Availability {
   professionalId  String
   dayOfWeek       Int       // 0-6 (Sun-Sat)
   startTime       String    // "09:00"
-  endTime         String    // "17:00"
+  endTime         String    // "12:00"
   
   professional    ProfessionalProfile @relation(fields: [professionalId], references: [id])
 }
@@ -63,11 +67,20 @@ model Appointment {
   startTime       DateTime
   endTime         DateTime
   status          AppointmentStatus @default(PENDING)
+  paymentStatus   PaymentStatus     @default(PENDING)
   notes           String?
   
   patient         User      @relation("PatientAppointments", fields: [patientId], references: [id])
   professional    ProfessionalProfile @relation("DoctorAppointments", fields: [professionalId], references: [id])
   service         Service   @relation(fields: [serviceId], references: [id])
+}
+
+model AccessCode {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  role      Role     @default(PROFESSIONAL)
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
 
 enum Role {
@@ -81,4 +94,11 @@ enum AppointmentStatus {
   CONFIRMED
   CANCELLED
   COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
 }
