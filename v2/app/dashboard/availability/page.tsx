@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { Trash2, Plus } from "lucide-react"
+import { Trash2, Plus, Loader2 } from "lucide-react"
 
 // Types
 type TimeRange = {
@@ -154,7 +154,13 @@ export default function AvailabilityPage() {
         }
     };
 
-    if (fetching) return <div>Loading...</div>;
+    if (fetching) {
+        return (
+            <div className="flex justify-center items-center min-h-[50vh]">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col gap-6 p-4">
@@ -231,7 +237,10 @@ export default function AvailabilityPage() {
                     ))}
                 </CardContent>
                 <CardFooter>
-                    <Button onClick={saveSchedule} disabled={loading}>{loading ? "Saving..." : "Save Schedule"}</Button>
+                    <Button onClick={saveSchedule} disabled={loading}>
+                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {loading ? "Saving..." : "Save Schedule"}
+                    </Button>
                 </CardFooter>
             </Card>
         </div>
