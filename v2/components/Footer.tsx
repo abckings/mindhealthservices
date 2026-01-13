@@ -19,9 +19,9 @@ const Footer = () => {
               In collaboration with MDA (Madras Dyslexia Association), we offer a conducive environment for children with Specific Learning Disabilities to overcome their difficulties.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="bg-brand-sage p-2 rounded-full hover:bg-brand-orange transition"><Facebook className="w-5 h-5" /></a>
-              <a href="#" className="bg-brand-sage p-2 rounded-full hover:bg-brand-orange transition"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="bg-brand-sage p-2 rounded-full hover:bg-brand-orange transition"><Instagram className="w-5 h-5" /></a>
+              <a href="#" aria-label="Visit our Facebook page" className="bg-brand-sage p-2 rounded-full hover:bg-brand-orange transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"><Facebook className="w-5 h-5" /></a>
+              <a href="#" aria-label="Visit our Twitter page" className="bg-brand-sage p-2 rounded-full hover:bg-brand-orange transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"><Twitter className="w-5 h-5" /></a>
+              <a href="#" aria-label="Visit our Instagram page" className="bg-brand-sage p-2 rounded-full hover:bg-brand-orange transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"><Instagram className="w-5 h-5" /></a>
             </div>
           </div>
 

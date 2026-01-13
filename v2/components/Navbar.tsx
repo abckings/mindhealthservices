@@ -10,14 +10,20 @@ const Navbar = () => {
 
   return (
     <nav className="bg-brand-teal text-white shadow-lg sticky top-0 z-50">
+      <a
+        href="#main-content"
+        className="absolute left-4 top-4 z-[100] -translate-y-full bg-brand-sage px-4 py-2 text-white transition-transform focus:translate-y-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      >
+        Skip to main content
+      </a>
       {/* Top Bar - Contact Info */}
       <div className="bg-brand-teal/90 border-b border-brand-sage/20 py-2 hidden md:block">
         <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-sm text-brand-mint/80 font-medium">
-          <a href="tel:+916383376668" className="flex items-center hover:text-brand-sage transition">
+          <a href="tel:+916383376668" className="flex items-center hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">
             <Phone className="w-4 h-4 mr-2" />
             +91 63833 76668
           </a>
-          <a href="mailto:info@mindhealthservices.org" className="flex items-center hover:text-brand-sage transition">
+          <a href="mailto:info@mindhealthservices.org" className="flex items-center hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">
             <Mail className="w-4 h-4 mr-2" />
             info@mindhealthservices.org
           </a>
@@ -27,7 +33,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">
             <div className="relative w-12 h-12 bg-white rounded-full p-1">
               <Image src="/images/logo.png" alt="Raj Mind Health Services" fill className="object-contain p-1" />
             </div>
@@ -39,12 +45,12 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 font-medium items-center">
-            <Link href="/" className="hover:text-brand-sage transition">Home</Link>
-            <Link href="/whoweare" className="hover:text-brand-sage transition">About Us</Link>
-            <Link href="/services" className="hover:text-brand-sage transition">Services</Link>
-            <Link href="/gallery" className="hover:text-brand-sage transition">Gallery</Link>
-            <Link href="/dashboard" className="text-brand-orange font-bold hover:text-white transition">Dashboard</Link>
-            <Link href="/contactus" className="bg-brand-sage text-white px-5 py-2 rounded-full hover:bg-brand-orange transition shadow-md">
+            <Link href="/" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Home</Link>
+            <Link href="/whoweare" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">About Us</Link>
+            <Link href="/services" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Services</Link>
+            <Link href="/gallery" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Gallery</Link>
+            <Link href="/dashboard" className="text-brand-orange font-bold hover:text-white transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Dashboard</Link>
+            <Link href="/contactus" className="bg-brand-sage text-white px-5 py-2 rounded-full hover:bg-brand-orange transition shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
               Contact Us
             </Link>
           </div>

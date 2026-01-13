@@ -1,10 +1,9 @@
 import { auth, signIn } from "@/auth"
-import { Button } from "@/components/ui/button"
+import { SubmitButton } from "@/components/ui/submit-button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { Github, Chrome } from "lucide-react"
+import { Chrome } from "lucide-react"
 import { redirect } from "next/navigation"
 
 export default async function LoginPage() {
@@ -30,10 +29,10 @@ export default async function LoginPage() {
               await signIn("google")
             }}
           >
-            <Button variant="outline" className="w-full" type="submit">
+            <SubmitButton variant="outline" className="w-full" loadingText="Connecting...">
               <Chrome className="mr-2 h-4 w-4" />
               Google
-            </Button>
+            </SubmitButton>
           </form>
 
           <div className="relative">
@@ -67,9 +66,9 @@ export default async function LoginPage() {
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" name="password" type="password" required />
               </div>
-              <Button className="w-full" type="submit">
+              <SubmitButton className="w-full" loadingText="Signing In...">
                 Sign In
-              </Button>
+              </SubmitButton>
             </div>
           </form>
         </CardContent>
