@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
 import ConditionalFooter from "../components/ConditionalFooter";
+import ScrollToTop from "@/components/ScrollToTop";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
@@ -84,10 +85,11 @@ export default function RootLayout({
       >
         <SessionProvider>
           <Navbar />
-          <main className="flex-grow">
+          <main id="main-content" className="flex-grow" tabIndex={-1}>
             {children}
           </main>
           <ConditionalFooter />
+          <ScrollToTop />
         </SessionProvider>
       </body>
     </html>
