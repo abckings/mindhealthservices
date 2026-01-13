@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Button } from './button';
 
 describe('Button', () => {
@@ -8,11 +9,12 @@ describe('Button', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('handles click events', () => {
+  it('handles click events', async () => {
     const handleClick = jest.fn();
+    const user = userEvent.setup();
     render(<Button onClick={handleClick}>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
-    fireEvent.click(button);
+    await user.click(button);
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 

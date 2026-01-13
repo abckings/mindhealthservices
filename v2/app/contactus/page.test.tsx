@@ -1,5 +1,6 @@
 // v2/app/contactus/page.test.tsx
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ContactUs from './page';
 
 describe('ContactUs Page', () => {
@@ -22,19 +23,19 @@ describe('ContactUs Page', () => {
     expect(screen.getByLabelText(/message/i)).toBeInTheDocument();
   });
 
-  it('updates form state on user input', () => {
+  it('updates form state on user input', async () => {
+    const user = userEvent.setup();
     render(<ContactUs />);
     const nameInput = screen.getByLabelText(/your name/i);
-    fireEvent.change(nameInput, { target: { value: 'John Doe' } });
+    await user.type(nameInput, 'John Doe');
     expect((nameInput as HTMLInputElement).value).toBe('John Doe');
   });
 
-  it('triggers WhatsApp action', () => {
+  it('triggers WhatsApp action', async () => {
+    const user = userEvent.setup();
     render(<ContactUs />);
-    // "WhatsApp" text is on the button, but might also be in the description.
-    // Use getByRole to be specific.
     const waButton = screen.getByRole('button', { name: /whatsapp/i });
-    fireEvent.click(waButton);
+    await user.click(waButton);
     expect(window.open).toHaveBeenCalled();
   });
 });
