@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Input } from './input';
 
 describe('Input', () => {
@@ -8,12 +9,13 @@ describe('Input', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('handles user input', () => {
+  it('handles user input', async () => {
     const handleChange = jest.fn();
+    const user = userEvent.setup();
     render(<Input onChange={handleChange} placeholder="Type here" />);
     const input = screen.getByPlaceholderText(/type here/i);
-    fireEvent.change(input, { target: { value: 'Hello' } });
-    expect(handleChange).toHaveBeenCalledTimes(1);
+    await user.type(input, 'Hello');
+    expect(handleChange).toHaveBeenCalled();
     expect((input as HTMLInputElement).value).toBe('Hello');
   });
 
