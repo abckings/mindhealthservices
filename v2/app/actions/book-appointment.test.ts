@@ -1,8 +1,10 @@
 import { createBooking } from './book-appointment';
 
-// Since the action is "use server", we are testing the logic.
-// However, 'use server' components often need environment context, but here it's just a function.
-// The current implementation is mocked/stubbed, so we test the stub.
+// We mock the prisma client even though it is commented out in the implementation
+// to ensure that if it gets uncommented, the test doesn't break or hit a real DB.
+jest.mock('@/lib/prisma', () => ({
+  prisma: require('../../lib/__mocks__/prisma').default
+}));
 
 describe('createBooking Server Action', () => {
   it('validates input and returns success', async () => {
