@@ -14,37 +14,50 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export default function DashboardLayout({
+import Footer from "@/components/Footer";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+
+export default async function DashboardLayout({
     children,
-}: {
-    children: React.ReactNode
-}) {
-    // Mock user for now
-    const user = { name: "Dr. Raj", email: "raj@mindhealth.com" }
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
+    const session = await auth();
+
+    // Check if the user is logged in
+    if (!session) {
+        redirect("/api/auth/signin"); // Redirect to NextAuth sign-in page
+    }
 
     return (
         <SidebarProvider>
-            <AppSidebar user={user} />
+            <AppSidebar user={session.user} />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-                    <SidebarTrigger className="-ml-1" />
-                    <Separator orientation="vertical" className="mr-2 h-4" />
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator className="hidden md:block" />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>Overview</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+                    <div className="flex items-center gap-2 px-4">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator orientation="vertical" className="mr-2 h-4" />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block">
+                                    <BreadcrumbLink href="#">
+                                        Dashboard
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator className="hidden md:block" />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage>Overview</BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4">
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     {children}
                 </div>
+                <Footer />
             </SidebarInset>
         </SidebarProvider>
-    )
+    );
 }

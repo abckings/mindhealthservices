@@ -1,5 +1,5 @@
 
-FROM node:25-alpine AS base
+FROM node:24-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -22,7 +22,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm install -g pnpm && pnpm run build
+RUN npm install -g pnpm && npx prisma generate && pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner

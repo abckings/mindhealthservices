@@ -9,6 +9,7 @@ import {
     User,
     LogOut
 } from "lucide-react"
+import { signOut } from "next-auth/react"
 
 import {
     Sidebar,
@@ -31,7 +32,7 @@ import {
 
 export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: any }) {
     return (
-        <Sidebar {...props}>
+        <Sidebar {...props} className="!top-[7.5rem] !h-auto !bottom-0 pb-4" variant="sidebar">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -50,6 +51,7 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
+
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild isActive>
@@ -88,7 +90,7 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
             <SidebarFooter>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton>
+                        <SidebarMenuButton onClick={() => signOut({ callbackUrl: "/" })}>
                             <LogOut />
                             <span>Sign out</span>
                         </SidebarMenuButton>

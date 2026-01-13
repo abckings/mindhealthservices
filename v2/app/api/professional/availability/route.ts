@@ -31,15 +31,14 @@ export async function POST(req: Request) {
         const session = await auth();
         // @ts-ignore
         if (!session?.user?.email || session.user.role !== "PROFESSIONAL") {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            return NextResponse.json({ error: "Unauthorized: You must be logged in as a Professional." }, { status: 401 });
         }
 
         const body = await req.json();
-        // Expecting body to be an array of { dayOfWeek, startTime, endTime }
         const availabilityData = body;
 
         if (!Array.isArray(availabilityData)) {
-            return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+            return NextResponse.json({ error: "Invalid payload: Expected an array of time slots." }, { status: 400 });
         }
 
         const profile = await prisma.professionalProfile.findUnique({
@@ -47,7 +46,8 @@ export async function POST(req: Request) {
         });
 
         if (!profile) {
-            return NextResponse.json({ error: "Profile not found" }, { status: 404 });
+            console.error("Professional profile not found for user:", session.user.id);
+            return NextResponse.json({ error: `Profile not found for user ID: ${session.user.id}. Please contact support.` }, { status: 404 });
         }
 
         // Transaction to replace availability
@@ -66,8 +66,8 @@ export async function POST(req: Request) {
         ]);
 
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Save availability error:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return NextResponse.json({ error: `Internal Server Error: ${error.message || "Unknown error"}` }, { status: 500 });
     }
 }
