@@ -48,7 +48,14 @@ export default async function LoginPage() {
           <form
             action={async (formData) => {
               "use server"
-              await signIn("credentials", formData)
+              try {
+                await signIn("credentials", formData)
+              } catch (error) {
+                if (error instanceof Error && error.message.includes("NEXT_REDIRECT")) {
+                  throw error;
+                }
+                throw error;
+              }
             }}
           >
             <div className="grid gap-4">
@@ -67,9 +74,9 @@ export default async function LoginPage() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
-            <p className="text-xs text-center text-muted-foreground mt-2">
+          <p className="text-xs text-center text-muted-foreground mt-2">
             By clicking continue, you agree to our Terms of Service and Privacy Policy.
-            </p>
+          </p>
         </CardFooter>
       </Card>
     </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import ConditionalFooter from "../components/ConditionalFooter";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
@@ -87,7 +87,7 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
-          <Footer />
+          <ConditionalFooter />
         </SessionProvider>
       </body>
     </html>

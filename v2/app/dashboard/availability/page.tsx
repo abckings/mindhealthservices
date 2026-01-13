@@ -141,14 +141,16 @@ export default function AvailabilityPage() {
                 body: JSON.stringify(payload)
             });
 
+            const data = await res.json();
+
             if (res.ok) {
                 alert("Schedule saved successfully!");
             } else {
-                alert("Failed to save schedule.");
+                alert(data.error || "Failed to save schedule.");
             }
         } catch (e) {
             console.error(e);
-            alert("Error saving schedule.");
+            alert("Error saving schedule: " + (e as Error).message);
         } finally {
             setLoading(false);
         }
