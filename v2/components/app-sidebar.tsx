@@ -22,13 +22,7 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar"
 
-// Simple mock components since we don't have the full shadcn/ui registry setup yet
-// We will replace these with real shadcn components if the user wants correct installation
-// But for "Agentic" speed, I will implement minimal versions or use what's available.
-// Actually, I should probably implement the minimal sidebar components if they don't exist.
-// Checking file structure first would have been better, but assuming they don't exist.
-// Wait, I am importing from "@/components/ui/sidebar". 
-// I need to create that file first.
+
 
 export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: any }) {
     return (
