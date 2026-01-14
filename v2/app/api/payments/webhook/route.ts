@@ -2,21 +2,21 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { emailService } from "@/lib/email";
 
-// Mock webhook handler for Stripe
-// In real life, this receives events from Stripe
+// Mock webhook handler for Razorpay
+// In real life, this receives events from Razorpay (signature verification required)
 export async function POST(request: Request) {
     try {
         const body = await request.json();
 
-        // Mock event structure
+        // Mock Razorpay payload structure usually has { event: "order.paid", payload: { ... } }
         const event = body;
 
-        if (event.type === 'payment_intent.succeeded') {
-            const paymentIntent = event.data.object;
+        if (event.event === 'order.paid') {
+            const order = event.payload.order.entity;
 
             // 1. Find Payment record
             const payment = await prisma.payment.findFirst({
-                where: { externalId: paymentIntent.id }
+                where: { externalId: order.id }
             });
 
             if (payment) {

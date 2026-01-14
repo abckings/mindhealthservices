@@ -82,8 +82,8 @@ model Payment {
   appointmentId String        @unique
   amount        Float
   currency      String        @default("INR")
-  provider      String        @default("STRIPE") // "STRIPE", "RAZORPAY"
-  externalId    String?       // Stripe PaymentIntent ID
+  provider      String        @default("RAZORPAY") // "STRIPE", "RAZORPAY"
+  externalId    String?       // Stripe PaymentIntent ID or Razorpay Order ID
   status        PaymentStatus @default(PENDING)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
