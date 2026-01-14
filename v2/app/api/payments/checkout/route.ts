@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { stripe } from "@/lib/stripe"; // This is our mock
+import { razorpay } from "@/lib/razorpay"; // This is our mock
 import { z } from "zod";
 
 const CheckoutSchema = z.object({
@@ -26,13 +26,13 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "Appointment already paid" }, { status: 400 });
         }
 
-        // 2. Create Stripe PaymentIntent
-        // Amount should be in smallest currency unit (e.g. cents)
+        // 2. Create Razorpay Order
+        // Amount should be in smallest currency unit (paise)
         const amount = Math.round(appointment.service.price * 100);
 
-        const paymentIntent = await stripe.paymentIntents.create({
+        const order = await razorpay.orders.create({
             amount,
-            currency: appointment.service.currency.toLowerCase(),
+            currency: appointment.service.currency.toUpperCase(),
         });
 
         // 3. Save Payment Record
@@ -41,14 +41,16 @@ export async function POST(request: Request) {
                 appointmentId: appointment.id,
                 amount: appointment.service.price,
                 currency: appointment.service.currency,
-                externalId: paymentIntent.id,
+                provider: "RAZORPAY",
+                externalId: order.id,
                 status: "PENDING"
             }
         });
 
         return NextResponse.json({
-            clientSecret: paymentIntent.client_secret,
-            paymentId: paymentIntent.id
+            orderId: order.id,
+            amount: order.amount,
+            currency: order.currency
         });
 
     } catch (error: any) {
