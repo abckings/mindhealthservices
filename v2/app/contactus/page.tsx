@@ -125,10 +125,14 @@ export default function ContactUs() {
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Name <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
                   <input
                     type="text"
                     id="name"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your full name"
                     value={name}
@@ -137,10 +141,14 @@ export default function ContactUs() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Email <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
                   <input
                     type="email"
                     id="email"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your email"
                     value={email}
@@ -149,10 +157,14 @@ export default function ContactUs() {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
                   <input
                     type="tel"
                     id="phone"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your phone number"
                     value={phone}
@@ -161,9 +173,13 @@ export default function ContactUs() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Message <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
                   <textarea
                     id="message"
+                    required
+                    aria-required="true"
                     rows={4}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="How can we help you?"
