@@ -12,6 +12,121 @@ const BookingSchema = z.object({
     serviceId: z.string()
 })
 
+const AvailabilitySchema = z.object({
+    date: z.string(),
+    serviceId: z.string()
+})
+
+export async function getAvailableSlots(data: z.infer<typeof AvailabilitySchema>) {
+    try {
+        const { date, serviceId } = data
+        console.log("Fetching slots for:", { date, serviceId })
+
+        // Parse "YYYY-MM-DD" strictly as local time
+        // new Date("YYYY-MM-DD") is UTC, which can shift the day if local TZ is behind UTC (e.g. USA)
+        // We split and use the constructor new Date(y, mIndex, d) which uses Local Time
+        const [year, month, day] = date.split('-').map(Number)
+        const dateObj = new Date(year, month - 1, day)
+
+        const dayOfWeek = dateObj.getDay()
+        console.log("Computed day of week:", dayOfWeek)
+
+        // 1. Get Service & Professional
+        let service = await prisma.service.findUnique({
+            where: { id: serviceId },
+            include: { professional: true }
+        })
+
+        // Fallback for mock/demo values if using seeds that might default to "general" or user input
+        if (!service) {
+            const services = await prisma.service.findMany({
+                where: {
+                    OR: [
+                        { name: { contains: serviceId, mode: 'insensitive' } },
+                        { name: { contains: "Consultation" } }
+                    ]
+                },
+                include: { professional: true },
+                take: 1
+            })
+            if (services.length > 0) service = services[0]
+        }
+
+        if (!service) throw new Error("Service not found")
+
+        // 2. Get Professional's Availability for this day
+        // 2. Get Professional's Availability for this day
+        // Use findMany to support split shifts (e.g. Morning + Evening)
+        const availabilities = await prisma.availability.findMany({
+            where: {
+                professionalId: service.professional.id,
+                dayOfWeek: dayOfWeek
+            }
+        })
+        console.log("availabilities found:", availabilities)
+
+        if (!availabilities || availabilities.length === 0) {
+            return [] // Not working today
+        }
+
+        const now = new Date()
+        const slots: string[] = []
+        const durationMs = service.duration * 60 * 1000 // duration in minutes to ms
+
+        // Iterate over EACH availability window for the day
+        for (const availability of availabilities) {
+            // Range: availability start to end on that specific date
+            const startDateTime = new Date(`${date.split('T')[0]}T${availability.startTime}:00`)
+            const endDateTime = new Date(`${date.split('T')[0]}T${availability.endTime}:00`)
+
+            if (startDateTime < now && endDateTime < now) {
+                continue; // This window has passed
+            }
+
+            const bookedAppointments = await prisma.appointment.findMany({
+                where: {
+                    professionalId: service.professional.id,
+                    startTime: {
+                        gte: startDateTime,
+                        lt: endDateTime
+                    },
+                    status: { not: "CANCELLED" }
+                }
+            })
+
+            let currentSlot = new Date(startDateTime)
+
+            while (currentSlot.getTime() + durationMs <= endDateTime.getTime()) {
+                const slotEnd = new Date(currentSlot.getTime() + durationMs)
+
+                // Check if overlaps with any booked appointment
+                const isBooked = bookedAppointments.some(appt => {
+                    const apptStart = new Date(appt.startTime)
+                    const apptEnd = new Date(appt.endTime)
+                    return (currentSlot < apptEnd && slotEnd > apptStart)
+                })
+
+                if (!isBooked && currentSlot > now) {
+                    const timeString = currentSlot.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })
+                    // Avoid duplicates if windows overlap (unlikely but safe)
+                    if (!slots.includes(timeString)) {
+                        slots.push(timeString)
+                    }
+                }
+
+                currentSlot = new Date(currentSlot.getTime() + durationMs)
+            }
+        }
+
+        // Sort slots chronologically
+        return slots.sort()
+
+    } catch (error) {
+        console.error("Get slots error:", error)
+        return []
+    }
+}
+
 export async function createBooking(data: z.infer<typeof BookingSchema>) {
     try {
         const session = await auth()
@@ -23,9 +138,6 @@ export async function createBooking(data: z.infer<typeof BookingSchema>) {
         const validated = BookingSchema.parse(data)
 
         // 1. Fetch Service to get duration and professional
-        // If serviceId is "general", "therapy" (mock values), we need to handle them or expect real UUIDs
-        // For now, we assume the frontend sends real UUIDs.
-        // If the frontend sends "general", we might need a fallback or find a service by name.
         let service = await prisma.service.findUnique({
             where: { id: validated.serviceId },
             include: { professional: true }
@@ -34,13 +146,12 @@ export async function createBooking(data: z.infer<typeof BookingSchema>) {
         // Fallback for mock frontend values if real ID not found
         if (!service) {
             // Try to find by name or just pick the first service for demo purposes
-            // This is to support the legacy/mock frontend without breaking it immediately
             const services = await prisma.service.findMany({
                 where: {
-                   OR: [
-                     { name: { contains: validated.serviceId, mode: 'insensitive' } },
-                     { name: { contains: "Consultation" } } // Fallback
-                   ]
+                    OR: [
+                        { name: { contains: validated.serviceId, mode: 'insensitive' } },
+                        { name: { contains: "Consultation" } } // Fallback
+                    ]
                 },
                 include: { professional: true },
                 take: 1
@@ -65,6 +176,24 @@ export async function createBooking(data: z.infer<typeof BookingSchema>) {
 
         const endTime = new Date(startTime.getTime() + service.duration * 60000)
 
+        // 2.5 Double Booking Check
+        const overlappingAppointment = await prisma.appointment.findFirst({
+            where: {
+                professionalId: service.professional.id,
+                status: { not: "CANCELLED" },
+                OR: [
+                    {
+                        startTime: { lt: endTime },
+                        endTime: { gt: startTime }
+                    }
+                ]
+            }
+        })
+
+        if (overlappingAppointment) {
+            throw new Error("This slot is already booked. Please choose another time.")
+        }
+
         // 3. Create Appointment
         const appointment = await prisma.appointment.create({
             data: {
@@ -83,12 +212,13 @@ export async function createBooking(data: z.infer<typeof BookingSchema>) {
         // Send notification (async, don't block)
         if (session.user.email) {
             emailService.sendAppointmentConfirmation(session.user.email, {
-                 appointmentId: appointment.id,
-                 service: service.name,
-                 date: startTime
+                appointmentId: appointment.id,
+                service: service.name,
+                date: startTime
             }).catch(err => console.error("Failed to send email", err));
         }
 
+        revalidatePath('/dashboard/appointments')
         revalidatePath('/dashboard/book')
         return { success: true, appointmentId: appointment.id }
 

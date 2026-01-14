@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { format } from "date-fns"
 import { CalendarIcon, Loader2 } from "lucide-react"
 
@@ -23,7 +23,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { createBooking } from "@/app/actions/book-appointment"
+import { createBooking, getAvailableSlots } from "@/app/actions/book-appointment"
 
 export default function BookingPage() {
     const [date, setDate] = useState<Date>()
@@ -31,8 +31,35 @@ export default function BookingPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [service, setService] = useState("general")
 
-    // Mock slots - in real app would verify from server
-    const timeSlots = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"]
+    const [loadingSlots, setLoadingSlots] = useState(false)
+
+    // Replace mock with state
+    const [timeSlots, setTimeSlots] = useState<string[]>([])
+
+    const fetchSlots = async () => {
+        if (!date || !service) return
+
+        setLoadingSlots(true)
+        setTimeSlots([])
+
+        try {
+            // Pass YYYY-MM-DD string to avoid timezone shifts from toISOString()
+            const slots = await getAvailableSlots({
+                date: format(date, "yyyy-MM-dd"),
+                serviceId: service
+            })
+            setTimeSlots(slots)
+        } catch (error) {
+            console.error("Failed to load slots", error)
+        } finally {
+            setLoadingSlots(false)
+        }
+    }
+
+    // Fetch slots when date or service changes
+    useEffect(() => {
+        fetchSlots()
+    }, [date, service])
 
     const handleBook = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -47,9 +74,12 @@ export default function BookingPage() {
                 serviceId: service
             })
             alert("Booking Successful!")
-            // Reset or redirect
+            // Refresh slots to remove the booked one
+            await fetchSlots()
+            setSelectedSlot("") // Clear selection
         } catch (error) {
-            alert("Failed to book")
+            // @ts-ignore
+            alert("Failed to book: " + (error as Error).message)
         } finally {
             setIsSubmitting(false)
         }
@@ -103,7 +133,7 @@ export default function BookingPage() {
                                     selected={date}
                                     onSelect={setDate}
                                     initialFocus
-                                    disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                                    disabled={(date) => date < new Date()}
                                 />
                             </PopoverContent>
                         </Popover>
@@ -113,16 +143,26 @@ export default function BookingPage() {
                         <div className="grid gap-2">
                             <Label>Available Slots</Label>
                             <div className="grid grid-cols-3 gap-2">
-                                {timeSlots.map(slot => (
-                                    <Button
-                                        key={slot}
-                                        variant={selectedSlot === slot ? "default" : "outline"}
-                                        onClick={() => setSelectedSlot(slot)}
-                                        type="button"
-                                    >
-                                        {slot}
-                                    </Button>
-                                ))}
+                                {loadingSlots ? (
+                                    <div className="col-span-3 flex justify-center py-4">
+                                        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                                    </div>
+                                ) : timeSlots.length > 0 ? (
+                                    timeSlots.map(slot => (
+                                        <Button
+                                            key={slot}
+                                            variant={selectedSlot === slot ? "default" : "outline"}
+                                            onClick={() => setSelectedSlot(slot)}
+                                            type="button"
+                                        >
+                                            {slot}
+                                        </Button>
+                                    ))
+                                ) : (
+                                    <div className="col-span-3 text-center text-sm text-muted-foreground">
+                                        No slots available.
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}

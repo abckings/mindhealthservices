@@ -22,6 +22,10 @@ type Appointment = {
         email: string
         image: string | null
     }
+    professional?: {
+        user: { name: string | null }
+        specialty: string | null
+    }
     service: {
         name: string
         duration: number
@@ -82,7 +86,7 @@ export default function AppointmentsPage() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Date & Time</TableHead>
-                                    <TableHead>Patient</TableHead>
+                                    <TableHead>Participants</TableHead>
                                     <TableHead>Service</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead>Payment</TableHead>
@@ -100,7 +104,17 @@ export default function AppointmentsPage() {
                                                 </span>
                                             </div>
                                         </TableCell>
-                                        <TableCell className="font-medium">{appt.patient.name || appt.patient.email}</TableCell>
+                                        <TableCell>
+                                            <div className="flex flex-col gap-1">
+                                                <div className="text-sm font-medium">{appt.patient.name || appt.patient.email}</div>
+                                                {appt.professional && (
+                                                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                                                        <User className="h-3 w-3" />
+                                                        {appt.professional.user.name}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </TableCell>
                                         <TableCell>{appt.service.name}</TableCell>
                                         <TableCell>
                                             <Badge variant={appt.status === 'CONFIRMED' ? 'default' : 'secondary'}>
