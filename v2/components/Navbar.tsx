@@ -12,7 +12,7 @@ const Navbar = () => {
     <nav className="bg-brand-teal text-white shadow-lg sticky top-0 z-50">
       <a
         href="#main-content"
-        className="absolute left-4 top-4 z-[100] -translate-y-full bg-brand-sage px-4 py-2 text-white transition-transform focus:translate-y-0 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        className="fixed left-4 top-4 z-[100] -translate-y-[150%] bg-brand-orange text-white px-6 py-3 font-bold shadow-xl transition-transform focus:translate-y-0 rounded-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white"
       >
         Skip to main content
       </a>
