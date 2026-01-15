@@ -29,11 +29,11 @@ const Footer = () => {
           <div>
             <h4 className="text-xl font-bold mb-6 border-l-4 border-brand-sage pl-3">Quick Links</h4>
             <ul className="space-y-3 text-brand-mint/80">
-              <li><Link href="/" className="hover:text-brand-sage transition">Home</Link></li>
-              <li><Link href="/whoweare" className="hover:text-brand-sage transition">Who We Are</Link></li>
-              <li><Link href="/whatwedo" className="hover:text-brand-sage transition">What We Do</Link></li>
-              <li><Link href="/services" className="hover:text-brand-sage transition">Our Services</Link></li>
-              <li><Link href="/contactus" className="hover:text-brand-sage transition">Contact Us</Link></li>
+              <li><Link href="/" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">Home</Link></li>
+              <li><Link href="/whoweare" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">Who We Are</Link></li>
+              <li><Link href="/whatwedo" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">What We Do</Link></li>
+              <li><Link href="/services" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">Our Services</Link></li>
+              <li><Link href="/contactus" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -51,11 +51,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 text-brand-sage" />
-                <a href="tel:+916383376668" className="hover:text-brand-sage">+91 63833 76668</a>
+                <a href="tel:+916383376668" className="hover:text-brand-sage rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">+91 63833 76668</a>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-brand-sage" />
-                <a href="mailto:info@mindhealthservices.org" className="hover:text-brand-sage">info@mindhealthservices.org</a>
+                <a href="mailto:info@mindhealthservices.org" className="hover:text-brand-sage rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange">info@mindhealthservices.org</a>
               </li>
             </ul>
           </div>
