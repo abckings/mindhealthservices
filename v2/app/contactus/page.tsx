@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import Script from "next/script";
 
@@ -9,14 +9,28 @@ export default function ContactUs() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const validateForm = () => {
+    if (!name || !message) {
+      setError("Please fill in at least your Name and Message.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
 
   const handleWhatsApp = () => {
+    if (!validateForm()) return;
+
     const text = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const url = `https://wa.me/916383376668?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   };
 
   const handleEmail = () => {
+    if (!validateForm()) return;
+
     const subject = "Enquiry from Website";
     const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const url = `mailto:info@mindhealthservices.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -125,19 +139,28 @@ export default function ContactUs() {
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Name <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
                   <input
                     type="text"
                     id="name"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your full name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      if (error) setError("");
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Email
+                  </label>
                   <input
                     type="email"
                     id="email"
@@ -149,7 +172,9 @@ export default function ContactUs() {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number
+                  </label>
                   <input
                     type="tel"
                     id="phone"
@@ -161,28 +186,43 @@ export default function ContactUs() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Message <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
                   <textarea
                     id="message"
+                    required
+                    aria-required="true"
                     rows={4}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="How can we help you?"
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      if (error) setError("");
+                    }}
                   ></textarea>
                 </div>
+
+                {error && (
+                  <div className="text-red-500 text-sm font-medium animate-pulse" role="alert">
+                    {error}
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-4 pt-4">
                   <button
                     onClick={handleWhatsApp}
-                    className="flex items-center justify-center bg-[#25D366] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#20bd5a] transition"
+                    className="flex items-center justify-center bg-[#25D366] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#20bd5a] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#25D366]"
                   >
+                     <MessageCircle className="w-5 h-5 mr-2" aria-hidden="true" />
                      WhatsApp
                   </button>
                   <button
                     onClick={handleEmail}
-                    className="flex items-center justify-center bg-brand-teal text-white px-4 py-3 rounded-lg font-bold hover:bg-brand-sage transition"
+                    className="flex items-center justify-center bg-brand-teal text-white px-4 py-3 rounded-lg font-bold hover:bg-brand-sage transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-teal"
                   >
+                     <Mail className="w-5 h-5 mr-2" aria-hidden="true" />
                      Send Email
                   </button>
                 </div>

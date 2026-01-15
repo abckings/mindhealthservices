@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (path: string) => path === "/" ? pathname === "/" : pathname.startsWith(path);
 
   return (
     <nav className="bg-brand-teal text-white shadow-lg sticky top-0 z-50">
@@ -45,12 +50,46 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 font-medium items-center">
-            <Link href="/" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Home</Link>
-            <Link href="/whoweare" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">About Us</Link>
-            <Link href="/services" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Services</Link>
-            <Link href="/gallery" className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Gallery</Link>
-            <Link href="/dashboard" className="text-brand-orange font-bold hover:text-white transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Dashboard</Link>
-            <Link href="/contactus" className="bg-brand-sage text-white px-5 py-2 rounded-full hover:bg-brand-orange transition shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+            {[
+              { path: "/", label: "Home" },
+              { path: "/whoweare", label: "About Us" },
+              { path: "/services", label: "Services" },
+              { path: "/gallery", label: "Gallery" },
+            ].map((link) => (
+              <Link
+                key={link.path}
+                href={link.path}
+                className={cn(
+                  "transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage",
+                  isActive(link.path) ? "text-brand-orange font-bold" : "hover:text-brand-sage"
+                )}
+                aria-current={isActive(link.path) ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <Link
+              href="/dashboard"
+              className={cn(
+                "transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage",
+                isActive("/dashboard") ? "text-brand-orange font-bold" : "text-brand-orange hover:text-white"
+              )}
+              aria-current={isActive("/dashboard") ? "page" : undefined}
+            >
+              Dashboard
+            </Link>
+
+            <Link
+              href="/contactus"
+              className={cn(
+                "px-5 py-2 rounded-full transition shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                isActive("/contactus")
+                  ? "bg-brand-orange text-white"
+                  : "bg-brand-sage text-white hover:bg-brand-orange"
+              )}
+              aria-current={isActive("/contactus") ? "page" : undefined}
+            >
               Contact Us
             </Link>
           </div>
@@ -71,12 +110,27 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-brand-teal/95 border-t border-brand-sage/20">
           <div className="flex flex-col space-y-4 p-6 text-center text-lg font-medium">
-            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Home</Link>
-            <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">About Us</Link>
-            <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Services</Link>
-            <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Gallery</Link>
-            <Link href="/dashboard" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition font-semibold">Dashboard</Link>
-            <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-brand-sage font-bold">Contact Us</Link>
+             {[
+              { path: "/", label: "Home" },
+              { path: "/whoweare", label: "About Us" },
+              { path: "/services", label: "Services" },
+              { path: "/gallery", label: "Gallery" },
+              { path: "/dashboard", label: "Dashboard" },
+              { path: "/contactus", label: "Contact Us" },
+            ].map((link) => (
+              <Link
+                key={link.path}
+                href={link.path}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "transition",
+                  isActive(link.path) ? "text-brand-orange font-bold" : "hover:text-brand-sage"
+                )}
+                aria-current={isActive(link.path) ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            ))}
             <div className="pt-4 flex flex-col items-center space-y-3 text-base text-brand-mint/70">
               <a href="tel:+916383376668" className="flex items-center"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
             </div>
