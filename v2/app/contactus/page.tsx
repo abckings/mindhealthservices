@@ -10,13 +10,23 @@ export default function ContactUs() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
+  const validateForm = () => {
+    if (!name || !email || !phone || !message) {
+      alert("Please fill in all required fields.");
+      return false;
+    }
+    return true;
+  };
+
   const handleWhatsApp = () => {
+    if (!validateForm()) return;
     const text = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const url = `https://wa.me/916383376668?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   };
 
   const handleEmail = () => {
+    if (!validateForm()) return;
     const subject = "Enquiry from Website";
     const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const url = `mailto:info@mindhealthservices.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -123,13 +133,14 @@ export default function ContactUs() {
               <h2 className="text-2xl font-bold text-brand-teal mb-2">Quick Enquiry</h2>
               <p className="text-gray-600 mb-6">Send us a message via WhatsApp or Email.</p>
 
-              <div className="space-y-4">
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none focus-visible:ring-2 focus-visible:ring-brand-sage focus-visible:border-transparent transition"
                     placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -141,7 +152,8 @@ export default function ContactUs() {
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none focus-visible:ring-2 focus-visible:ring-brand-sage focus-visible:border-transparent transition"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -153,7 +165,8 @@ export default function ContactUs() {
                   <input
                     type="tel"
                     id="phone"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none focus-visible:ring-2 focus-visible:ring-brand-sage focus-visible:border-transparent transition"
                     placeholder="Enter your phone number"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -165,7 +178,8 @@ export default function ContactUs() {
                   <textarea
                     id="message"
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none focus-visible:ring-2 focus-visible:ring-brand-sage focus-visible:border-transparent transition"
                     placeholder="How can we help you?"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -174,19 +188,21 @@ export default function ContactUs() {
 
                 <div className="grid grid-cols-2 gap-4 pt-4">
                   <button
+                    type="button"
                     onClick={handleWhatsApp}
-                    className="flex items-center justify-center bg-[#25D366] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#20bd5a] transition"
+                    className="flex items-center justify-center bg-[#25D366] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#20bd5a] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#25D366]"
                   >
                      WhatsApp
                   </button>
                   <button
+                    type="button"
                     onClick={handleEmail}
-                    className="flex items-center justify-center bg-brand-teal text-white px-4 py-3 rounded-lg font-bold hover:bg-brand-sage transition"
+                    className="flex items-center justify-center bg-brand-teal text-white px-4 py-3 rounded-lg font-bold hover:bg-brand-sage transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-sage"
                   >
                      Send Email
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
 
           </div>

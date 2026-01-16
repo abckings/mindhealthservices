@@ -71,14 +71,14 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-brand-teal/95 border-t border-brand-sage/20">
           <div className="flex flex-col space-y-4 p-6 text-center text-lg font-medium">
-            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Home</Link>
-            <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">About Us</Link>
-            <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Services</Link>
-            <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition">Gallery</Link>
-            <Link href="/dashboard" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition font-semibold">Dashboard</Link>
-            <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-brand-sage font-bold">Contact Us</Link>
+            <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Home</Link>
+            <Link href="/whoweare" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">About Us</Link>
+            <Link href="/services" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Services</Link>
+            <Link href="/gallery" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Gallery</Link>
+            <Link href="/dashboard" onClick={() => setIsOpen(false)} className="hover:text-brand-sage transition font-semibold rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Dashboard</Link>
+            <Link href="/contactus" onClick={() => setIsOpen(false)} className="text-brand-sage font-bold rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage">Contact Us</Link>
             <div className="pt-4 flex flex-col items-center space-y-3 text-base text-brand-mint/70">
-              <a href="tel:+916383376668" className="flex items-center"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
+              <a href="tel:+916383376668" className="flex items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage"><Phone className="w-4 h-4 mr-2" /> +91 63833 76668</a>
             </div>
           </div>
         </div>
