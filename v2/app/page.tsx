@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Star, Heart, Brain, BookOpen } from "lucide-react";
+import { ArrowRight, Star, Brain, BookOpen } from "lucide-react";
 
 export default function Home() {
   return (
@@ -77,7 +77,7 @@ export default function Home() {
               <p className="text-gray-600 mb-6">
                 Relieve stress, reduce anxiety, and regain emotional balance with our personalized counselling sessions.
               </p>
-              <Link href="/counselling" className="text-brand-sage font-semibold hover:text-brand-orange">Read More →</Link>
+              <Link href="/counselling" className="text-brand-sage font-semibold hover:text-brand-orange" aria-label="Read more about One to One Counselling">Read More →</Link>
             </div>
 
             {/* Service 2 */}
@@ -89,7 +89,7 @@ export default function Home() {
               <p className="text-gray-600 mb-6">
                 Specialized learning support for students with exceptional needs, including those with learning disabilities like dyslexia.
               </p>
-               <Link href="/specialeducation" className="text-brand-sage font-semibold hover:text-brand-orange">Read More →</Link>
+               <Link href="/specialeducation" className="text-brand-sage font-semibold hover:text-brand-orange" aria-label="Read more about Special Education">Read More →</Link>
             </div>
 
             {/* Service 3 */}
@@ -101,7 +101,7 @@ export default function Home() {
               <p className="text-gray-600 mb-6">
                 Expert guidance to help individuals identify their strengths and choose the right career path.
               </p>
-               <Link href="/careerguidance" className="text-brand-sage font-semibold hover:text-brand-orange">Read More →</Link>
+               <Link href="/careerguidance" className="text-brand-sage font-semibold hover:text-brand-orange" aria-label="Read more about Career Guidance">Read More →</Link>
             </div>
           </div>
 

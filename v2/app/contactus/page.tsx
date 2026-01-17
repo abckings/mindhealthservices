@@ -129,6 +129,8 @@ export default function ContactUs() {
                   <input
                     type="text"
                     id="name"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your full name"
                     value={name}
@@ -141,6 +143,8 @@ export default function ContactUs() {
                   <input
                     type="email"
                     id="email"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your email"
                     value={email}
@@ -153,6 +157,8 @@ export default function ContactUs() {
                   <input
                     type="tel"
                     id="phone"
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="Enter your phone number"
                     value={phone}
@@ -165,6 +171,8 @@ export default function ContactUs() {
                   <textarea
                     id="message"
                     rows={4}
+                    required
+                    aria-required="true"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-sage focus:border-transparent outline-none transition"
                     placeholder="How can we help you?"
                     value={message}
@@ -175,13 +183,13 @@ export default function ContactUs() {
                 <div className="grid grid-cols-2 gap-4 pt-4">
                   <button
                     onClick={handleWhatsApp}
-                    className="flex items-center justify-center bg-[#25D366] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#20bd5a] transition"
+                    className="flex items-center justify-center bg-[#25D366] text-white px-4 py-3 rounded-lg font-bold hover:bg-[#20bd5a] transition active:scale-95"
                   >
                      WhatsApp
                   </button>
                   <button
                     onClick={handleEmail}
-                    className="flex items-center justify-center bg-brand-teal text-white px-4 py-3 rounded-lg font-bold hover:bg-brand-sage transition"
+                    className="flex items-center justify-center bg-brand-teal text-white px-4 py-3 rounded-lg font-bold hover:bg-brand-sage transition active:scale-95"
                   >
                      Send Email
                   </button>

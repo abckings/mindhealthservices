@@ -1,14 +1,26 @@
 "use client";
 
-import Link from "next/link";
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
 export default function Gallery() {
   // There are 7 images in gallery1-images
   const images = Array.from({ length: 7 }, (_, i) => `/gallery1-images/${i + 1}.jpg`);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedImage(null);
+      }
+    };
+    if (selectedImage) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage]);
 
   // Note: In a real Next.js app, we would verify file existence at build time or use an API,
   // but for static export with client-side fallback (or just attempting to load),
@@ -35,8 +47,16 @@ export default function Gallery() {
             {images.map((src, index) => (
               <div
                 key={index}
-                className="relative h-64 rounded-xl overflow-hidden shadow-md cursor-pointer group"
+                role="button"
+                tabIndex={0}
+                className="relative h-64 rounded-xl overflow-hidden shadow-md cursor-pointer group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-sage"
                 onClick={() => setSelectedImage(src)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedImage(src);
+                  }
+                }}
               >
                 {/* We use a simple img tag for broader compatibility with unknown dimensions or potentially missing files,
                     though Next/Image is better. But with unknown dimensions, fill + object-cover is best. */}
@@ -60,7 +80,11 @@ export default function Gallery() {
       {/* Lightbox Modal */}
       {selectedImage && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" onClick={() => setSelectedImage(null)}>
-            <button className="absolute top-4 right-4 text-white hover:text-brand-sage transition">
+            <button
+              className="absolute top-4 right-4 text-white hover:text-brand-sage transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full p-1"
+              onClick={() => setSelectedImage(null)}
+              aria-label="Close lightbox"
+            >
                 <X className="w-10 h-10" />
             </button>
             <div className="relative max-w-4xl w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
