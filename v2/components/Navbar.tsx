@@ -57,7 +57,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-brand-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage rounded-sm"
+            className="md:hidden text-brand-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sage rounded-sm transition-transform active:scale-90"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle mobile menu"
             aria-expanded={isOpen}

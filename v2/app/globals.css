@@ -134,7 +134,13 @@
   * {
     @apply border-border outline-ring/50;
  }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
  }
+  ::selection {
+    @apply bg-brand-orange/30 text-brand-teal;
+  }
 }
