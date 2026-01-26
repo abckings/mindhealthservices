@@ -50,6 +50,9 @@ export default async function LoginPage() {
               try {
                 await signIn("credentials", formData)
               } catch (error) {
+                // Log the error to server console to see details
+                console.error("Sign in error:", error);
+
                 if (error instanceof Error && error.message.includes("NEXT_REDIRECT")) {
                   throw error;
                 }

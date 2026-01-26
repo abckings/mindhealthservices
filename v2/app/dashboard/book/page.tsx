@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { format } from "date-fns"
 import { CalendarIcon, Loader2 } from "lucide-react"
 
@@ -22,17 +22,76 @@ import {
 } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { createBooking } from "@/app/actions/book-appointment"
+import { createBooking, getAvailableSlots } from "@/app/actions/book-appointment"
 
 export default function BookingPage() {
     const [date, setDate] = useState<Date>()
     const [selectedSlot, setSelectedSlot] = useState<string>("")
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [service, setService] = useState("general")
+    const [service, setService] = useState("")
+    const [loadingSlots, setLoadingSlots] = useState(false)
+    const [timeSlots, setTimeSlots] = useState<string[]>([])
 
-    // Mock slots - in real app would verify from server
-    const timeSlots = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"]
+    // New state for professionals
+    const [professionals, setProfessionals] = useState<any[]>([])
+    const [selectedProfessional, setSelectedProfessional] = useState<string>("")
+    const [availableServices, setAvailableServices] = useState<any[]>([])
+
+    // Load professionals on mount
+    useEffect(() => {
+        const loadProfessionals = async () => {
+            try {
+                const { getProfessionals } = await import("@/app/actions/get-professionals")
+                const data = await getProfessionals()
+                setProfessionals(data)
+
+                if (data.length > 0) {
+                    setSelectedProfessional(data[0].id)
+                }
+            } catch (error) {
+                console.error("Failed to load professionals", error)
+            }
+        }
+        loadProfessionals()
+    }, [])
+
+    // Update services when professional changes
+    useEffect(() => {
+        if (selectedProfessional) {
+            const pro = professionals.find(p => p.id === selectedProfessional)
+            if (pro && pro.services.length > 0) {
+                setAvailableServices(pro.services)
+                setService(pro.services[0].id)
+            } else {
+                setAvailableServices([])
+                setService("")
+            }
+        }
+    }, [selectedProfessional, professionals])
+
+    const fetchSlots = async () => {
+        if (!date || !service) return
+
+        setLoadingSlots(true)
+        setTimeSlots([])
+
+        try {
+            const slots = await getAvailableSlots({
+                date: format(date, "yyyy-MM-dd"),
+                serviceId: service
+            })
+            setTimeSlots(slots)
+        } catch (error) {
+            console.error("Failed to load slots", error)
+        } finally {
+            setLoadingSlots(false)
+        }
+    }
+
+    // Fetch slots when date or service changes
+    useEffect(() => {
+        fetchSlots()
+    }, [date, service])
 
     const handleBook = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -47,9 +106,10 @@ export default function BookingPage() {
                 serviceId: service
             })
             alert("Booking Successful!")
-            // Reset or redirect
+            await fetchSlots()
+            setSelectedSlot("")
         } catch (error) {
-            alert("Failed to book")
+            alert("Failed to book: " + (error as Error).message)
         } finally {
             setIsSubmitting(false)
         }
@@ -69,15 +129,29 @@ export default function BookingPage() {
                 </CardHeader>
                 <CardContent className="grid gap-6">
                     <div className="grid gap-2">
+                        <Label htmlFor="professional">Professional</Label>
+                        <Select value={selectedProfessional} onValueChange={setSelectedProfessional}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select professional" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {professionals.map(p => (
+                                    <SelectItem key={p.id} value={p.id}>{p.name} ({p.specialty})</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <div className="grid gap-2">
                         <Label htmlFor="service">Service Type</Label>
-                        <Select value={service} onValueChange={setService}>
+                        <Select value={service} onValueChange={setService} disabled={!availableServices.length}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select service" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="general">General Consultation (30 min)</SelectItem>
-                                <SelectItem value="therapy">Therapy Session (1 hr)</SelectItem>
-                                <SelectItem value="emergency">Emergency (1 hr)</SelectItem>
+                                {availableServices.map(s => (
+                                    <SelectItem key={s.id} value={s.id}>{s.name} - {s.currency} {s.price} ({s.duration} min)</SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
@@ -103,7 +177,7 @@ export default function BookingPage() {
                                     selected={date}
                                     onSelect={setDate}
                                     initialFocus
-                                    disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                                    disabled={(date) => date < new Date()}
                                 />
                             </PopoverContent>
                         </Popover>
@@ -113,16 +187,26 @@ export default function BookingPage() {
                         <div className="grid gap-2">
                             <Label>Available Slots</Label>
                             <div className="grid grid-cols-3 gap-2">
-                                {timeSlots.map(slot => (
-                                    <Button
-                                        key={slot}
-                                        variant={selectedSlot === slot ? "default" : "outline"}
-                                        onClick={() => setSelectedSlot(slot)}
-                                        type="button"
-                                    >
-                                        {slot}
-                                    </Button>
-                                ))}
+                                {loadingSlots ? (
+                                    <div className="col-span-3 flex justify-center py-4">
+                                        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                                    </div>
+                                ) : timeSlots.length > 0 ? (
+                                    timeSlots.map(slot => (
+                                        <Button
+                                            key={slot}
+                                            variant={selectedSlot === slot ? "default" : "outline"}
+                                            onClick={() => setSelectedSlot(slot)}
+                                            type="button"
+                                        >
+                                            {slot}
+                                        </Button>
+                                    ))
+                                ) : (
+                                    <div className="col-span-3 text-center text-sm text-muted-foreground">
+                                        No slots available.
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}

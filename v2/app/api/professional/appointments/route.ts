@@ -7,30 +7,50 @@ export async function GET(req: Request) {
     try {
         const session = await auth();
         // @ts-ignore
-        if (!session?.user?.email || session.user.role !== "PROFESSIONAL") {
+        if (!session?.user?.email) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const profile = await prisma.professionalProfile.findUnique({
-            where: { userId: session.user.id }
-        });
+        // @ts-ignore
+        const role = session.user.role;
+        const userId = session.user.id;
 
-        if (!profile) {
-            return NextResponse.json({ error: "Profile not found" }, { status: 404 });
+        let whereClause = {};
+
+        if (role === "PROFESSIONAL") {
+            const profile = await prisma.professionalProfile.findUnique({
+                where: { userId: userId }
+            });
+
+            if (!profile) {
+                return NextResponse.json({ error: "Professional Profile not found" }, { status: 404 });
+            }
+            whereClause = { professionalId: profile.id };
+        } else {
+            // Assume PATIENT (or ADMIN acting as patient for now)
+            whereClause = { patientId: userId };
         }
 
         const appointments = await prisma.appointment.findMany({
-            where: { professionalId: profile.id },
+            where: whereClause,
             include: {
                 patient: {
                     select: { name: true, email: true, image: true }
                 },
+                professional: {
+                    select: { user: { select: { name: true } }, specialty: true } // Include professional details for patients
+                },
                 service: {
-                    select: { name: true, duration: true }
+                    select: { name: true, duration: true, price: true }
                 }
             },
             orderBy: { startTime: 'asc' }
         });
+
+        // Transform data slightly to match expected frontend structure if needed, or update frontend types.
+        // The current frontend uses `patient` and `service`.
+        // For patients, they might want to see `professional` name instead of `patient` (themselves).
+        // Let's keep the return flexible.
 
         return NextResponse.json(appointments);
     } catch (error) {

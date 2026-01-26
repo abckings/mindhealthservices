@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
     Calendar,
+    CalendarPlus,
     Clock,
     Home,
     Settings,
@@ -57,12 +58,22 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild>
-                            <a href="/dashboard/availability">
-                                <Clock />
-                                <span>Availability</span>
+                            <a href="/dashboard/book">
+                                <CalendarPlus />
+                                <span>Book Appointment</span>
                             </a>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
+                    {user?.role === "PROFESSIONAL" && (
+                        <SidebarMenuItem>
+                            <SidebarMenuButton asChild>
+                                <a href="/dashboard/availability">
+                                    <Clock />
+                                    <span>Availability</span>
+                                </a>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    )}
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild>
                             <a href="/dashboard/appointments">

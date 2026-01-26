@@ -74,6 +74,21 @@ model Appointment {
   patient         User      @relation("PatientAppointments", fields: [patientId], references: [id])
   professional    ProfessionalProfile @relation("DoctorAppointments", fields: [professionalId], references: [id])
   service         Service   @relation(fields: [serviceId], references: [id])
+  payment         Payment?
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  appointmentId String        @unique
+  amount        Float
+  currency      String        @default("INR")
+  provider      String        @default("RAZORPAY") // "STRIPE", "RAZORPAY"
+  externalId    String?       // Stripe PaymentIntent ID or Razorpay Order ID
+  status        PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  appointment   Appointment   @relation(fields: [appointmentId], references: [id])
 }
 
 model AccessCode {
