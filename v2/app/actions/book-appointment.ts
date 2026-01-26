@@ -54,7 +54,8 @@ export async function getAvailableSlots(data: z.infer<typeof AvailabilitySchema>
 
         if (!service) throw new Error("Service not found")
 
-        // 2. Get Professional's Availability for this day
+        console.log(`Checking availability for Professional ID: ${service.professional.id}`)
+
         // 2. Get Professional's Availability for this day
         // Use findMany to support split shifts (e.g. Morning + Evening)
         const availabilities = await prisma.availability.findMany({
@@ -83,16 +84,41 @@ export async function getAvailableSlots(data: z.infer<typeof AvailabilitySchema>
                 continue; // This window has passed
             }
 
+            // Log details for debugging
+            console.log(`Checking booked appointments between ${startDateTime.toISOString()} and ${endDateTime.toISOString()}`)
+
+            // Important: We must fetch appointments that overlap with the ENTIRE availability window.
+            // But we iterate slot by slot inside the code.
+            // The query below fetches ALL appointments in this window.
             const bookedAppointments = await prisma.appointment.findMany({
                 where: {
                     professionalId: service.professional.id,
-                    startTime: {
-                        gte: startDateTime,
-                        lt: endDateTime
-                    },
-                    status: { not: "CANCELLED" }
+                    status: { not: "CANCELLED" },
+                    // Check for overlap with the availability window
+                    startTime: { lt: endDateTime },
+                    endTime: { gt: startDateTime }
                 }
             })
+
+            console.log(`Found ${bookedAppointments.length} existing appointments in range`)
+
+            // DEBUG: Check if there are ANY for this professional on this day, regardless of time
+            if (bookedAppointments.length === 0) {
+                const allDay = await prisma.appointment.findMany({
+                    where: {
+                        professionalId: service.professional.id,
+                        status: { not: "CANCELLED" },
+                        startTime: {
+                            gte: new Date(year, month - 1, day), // start of local day
+                            lt: new Date(year, month - 1, day + 1) // end of local day
+                        }
+                    }
+                })
+                console.log("DEBUG: All appointments for this professional on this day:", allDay.length)
+                allDay.forEach(a => console.log(`  > ${a.startTime.toISOString()} - ${a.endTime.toISOString()}`))
+            }
+
+            bookedAppointments.forEach(b => console.log(`  - Booked: ${b.startTime.toISOString()} - ${b.endTime.toISOString()}`))
 
             let currentSlot = new Date(startDateTime)
 
@@ -103,15 +129,28 @@ export async function getAvailableSlots(data: z.infer<typeof AvailabilitySchema>
                 const isBooked = bookedAppointments.some(appt => {
                     const apptStart = new Date(appt.startTime)
                     const apptEnd = new Date(appt.endTime)
-                    return (currentSlot < apptEnd && slotEnd > apptStart)
+                    const overlaps = (currentSlot < apptEnd && slotEnd > apptStart)
+
+                    // Debug log for each check
+                    if (overlaps) {
+                        console.log(`  ⚠️  Slot ${currentSlot.toISOString()} - ${slotEnd.toISOString()} OVERLAPS with booking ${apptStart.toISOString()} - ${apptEnd.toISOString()}`)
+                    }
+
+                    return overlaps
                 })
 
+                const timeString = currentSlot.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })
+
                 if (!isBooked && currentSlot > now) {
-                    const timeString = currentSlot.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })
+                    console.log(`  ✓ Slot ${timeString} is available`)
                     // Avoid duplicates if windows overlap (unlikely but safe)
                     if (!slots.includes(timeString)) {
                         slots.push(timeString)
                     }
+                } else if (isBooked) {
+                    console.log(`  ✗ Slot ${timeString} is BLOCKED`)
+                } else {
+                    console.log(`  ✗ Slot ${timeString} is in the past`)
                 }
 
                 currentSlot = new Date(currentSlot.getTime() + durationMs)

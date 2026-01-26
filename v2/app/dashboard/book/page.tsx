@@ -22,19 +22,52 @@ import {
 } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
 import { createBooking, getAvailableSlots } from "@/app/actions/book-appointment"
 
 export default function BookingPage() {
     const [date, setDate] = useState<Date>()
     const [selectedSlot, setSelectedSlot] = useState<string>("")
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [service, setService] = useState("general")
-
+    const [service, setService] = useState("")
     const [loadingSlots, setLoadingSlots] = useState(false)
-
-    // Replace mock with state
     const [timeSlots, setTimeSlots] = useState<string[]>([])
+
+    // New state for professionals
+    const [professionals, setProfessionals] = useState<any[]>([])
+    const [selectedProfessional, setSelectedProfessional] = useState<string>("")
+    const [availableServices, setAvailableServices] = useState<any[]>([])
+
+    // Load professionals on mount
+    useEffect(() => {
+        const loadProfessionals = async () => {
+            try {
+                const { getProfessionals } = await import("@/app/actions/get-professionals")
+                const data = await getProfessionals()
+                setProfessionals(data)
+
+                if (data.length > 0) {
+                    setSelectedProfessional(data[0].id)
+                }
+            } catch (error) {
+                console.error("Failed to load professionals", error)
+            }
+        }
+        loadProfessionals()
+    }, [])
+
+    // Update services when professional changes
+    useEffect(() => {
+        if (selectedProfessional) {
+            const pro = professionals.find(p => p.id === selectedProfessional)
+            if (pro && pro.services.length > 0) {
+                setAvailableServices(pro.services)
+                setService(pro.services[0].id)
+            } else {
+                setAvailableServices([])
+                setService("")
+            }
+        }
+    }, [selectedProfessional, professionals])
 
     const fetchSlots = async () => {
         if (!date || !service) return
@@ -43,7 +76,6 @@ export default function BookingPage() {
         setTimeSlots([])
 
         try {
-            // Pass YYYY-MM-DD string to avoid timezone shifts from toISOString()
             const slots = await getAvailableSlots({
                 date: format(date, "yyyy-MM-dd"),
                 serviceId: service
@@ -74,11 +106,9 @@ export default function BookingPage() {
                 serviceId: service
             })
             alert("Booking Successful!")
-            // Refresh slots to remove the booked one
             await fetchSlots()
-            setSelectedSlot("") // Clear selection
+            setSelectedSlot("")
         } catch (error) {
-            // @ts-ignore
             alert("Failed to book: " + (error as Error).message)
         } finally {
             setIsSubmitting(false)
@@ -99,15 +129,29 @@ export default function BookingPage() {
                 </CardHeader>
                 <CardContent className="grid gap-6">
                     <div className="grid gap-2">
+                        <Label htmlFor="professional">Professional</Label>
+                        <Select value={selectedProfessional} onValueChange={setSelectedProfessional}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select professional" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {professionals.map(p => (
+                                    <SelectItem key={p.id} value={p.id}>{p.name} ({p.specialty})</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <div className="grid gap-2">
                         <Label htmlFor="service">Service Type</Label>
-                        <Select value={service} onValueChange={setService}>
+                        <Select value={service} onValueChange={setService} disabled={!availableServices.length}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select service" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="general">General Consultation (30 min)</SelectItem>
-                                <SelectItem value="therapy">Therapy Session (1 hr)</SelectItem>
-                                <SelectItem value="emergency">Emergency (1 hr)</SelectItem>
+                                {availableServices.map(s => (
+                                    <SelectItem key={s.id} value={s.id}>{s.name} - {s.currency} {s.price} ({s.duration} min)</SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
